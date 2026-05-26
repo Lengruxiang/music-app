@@ -2,10 +2,10 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://YOUR_BACKEND_URL.railway.app/:path*"
+      "destination": "https://netease-cloud-music-api-two-ashen-33.vercel.app/:path*"
     },
     {
-      "source": "/((?!api).)*",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
