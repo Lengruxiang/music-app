@@ -22,7 +22,7 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
 
   if (!tracks || tracks.length === 0) return null
 
-  const filtered = tracks.filter((t) => (t as any).fee !== 1)
+  const filtered = tracks.filter((t) => ![1, 4].includes((t as any).fee))
 
   if (filtered.length === 0) return null
 
