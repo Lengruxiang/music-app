@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://92a63050e33127c7-111-55-25-166.serveousercontent.com/:path*"
+      "destination": "http://t32ba566.natappfree.cc/:path*"
     },
     {
       "source": "/(.*)",
