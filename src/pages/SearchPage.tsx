@@ -189,9 +189,6 @@ export default function SearchPage() {
                 <img src={artist.picUrl || artist.img1v1Url} alt="" loading="lazy" className="w-12 h-12 rounded-full object-cover" />
                 <div>
                   <p className="text-sm font-medium">{artist.name}</p>
-                  <p className="text-xs text-gray-400">
-                    专辑：{artist.albumSize ?? '-'} · 歌曲：{artist.musicSize ?? '-'}
-                  </p>
                 </div>
               </Link>
             ))
