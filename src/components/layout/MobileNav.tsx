@@ -1,10 +1,10 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Search, BarChart3 } from 'lucide-react'
+import { Home, Search, Heart } from 'lucide-react'
 
 const navItems = [
   { to: '/', icon: Home, label: '发现' },
+  { to: '/favorites', icon: Heart, label: '收藏' },
   { to: '/search', icon: Search, label: '搜索' },
-  { to: '/toplist', icon: BarChart3, label: '排行' },
 ]
 
 export default function MobileNav() {

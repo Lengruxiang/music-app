@@ -1,4 +1,6 @@
+import { Heart } from 'lucide-react'
 import type { Track } from '../../api/types'
+import { useFavoritesStore } from '../../stores/favorites'
 
 interface Props {
   tracks: Track[]
@@ -15,6 +17,8 @@ function formatTime(ms: number) {
 }
 
 export default function TrackList({ tracks, onPlay, showCover = true, highlightId }: Props) {
+  const { toggle, has } = useFavoritesStore()
+
   if (!tracks || tracks.length === 0) return null
 
   const filtered = tracks.filter((t) => (t as any).fee !== 1)
@@ -25,15 +29,16 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
     <div className="w-full">
       {filtered.map((track, i) => {
         const isActive = highlightId === track.id
+        const isFav = has(track.id)
         return (
           <div
             key={track.id}
-            className={`flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer group transition-colors ${
+            className={`flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-2 rounded-md cursor-pointer group transition-colors ${
               isActive ? 'bg-red-50 text-red-500' : 'hover:bg-gray-50'
             }`}
             onClick={() => onPlay(track)}
           >
-            <span className="w-8 text-center text-sm text-gray-400 shrink-0">
+            <span className="w-6 sm:w-8 text-center text-xs sm:text-sm text-gray-400 shrink-0">
               {isActive ? (
                 <span className="inline-block w-3 h-3 bg-red-500 rounded-sm" />
               ) : (
@@ -44,7 +49,7 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
               <img
                 src={track.al?.picUrl || (track as any).album?.picUrl}
                 alt=""
-                className="w-10 h-10 rounded object-cover shrink-0"
+                className="w-9 sm:w-10 h-9 sm:h-10 rounded object-cover shrink-0"
               />
             )}
             <div className="flex-1 min-w-0">
@@ -57,7 +62,17 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
                   .join(' / ')}
               </p>
             </div>
-            <span className="text-xs text-gray-400 shrink-0 hidden group-hover:block">
+            <button
+              onClick={(e) => { e.stopPropagation(); toggle(track) }}
+              className={`shrink-0 p-1 transition-colors ${
+                isFav
+                  ? 'text-red-500'
+                  : 'text-gray-300 hover:text-red-400 opacity-0 group-hover:opacity-100'
+              }`}
+            >
+              <Heart size={16} fill={isFav ? 'currentColor' : 'none'} />
+            </button>
+            <span className="text-xs text-gray-400 shrink-0 hidden sm:group-hover:block">
               {formatTime(track.dt || (track as any).duration || 0)}
             </span>
           </div>

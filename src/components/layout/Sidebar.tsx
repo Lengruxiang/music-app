@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Search, BarChart3 } from 'lucide-react'
+import { Home, Search, BarChart3, Heart } from 'lucide-react'
 
 const navItems = [
   { to: '/', icon: Home, label: '发现音乐' },
   { to: '/toplist', icon: BarChart3, label: '排行榜' },
+  { to: '/favorites', icon: Heart, label: '我的收藏' },
   { to: '/search', icon: Search, label: '搜索' },
 ]
 

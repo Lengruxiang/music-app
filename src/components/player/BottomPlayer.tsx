@@ -10,8 +10,10 @@ import {
   Loader2,
   AlertCircle,
   X,
+  Heart,
 } from 'lucide-react'
 import { usePlayerStore } from '../../stores/player'
+import { useFavoritesStore } from '../../stores/favorites'
 
 function formatTime(s: number) {
   if (!isFinite(s) || s < 0) return '0:00'
@@ -82,6 +84,9 @@ export default function BottomPlayer() {
     )
   }
 
+  const { toggle: toggleFav, has: isFav } = useFavoritesStore()
+  const fav = isFav(currentTrack.id)
+
   const artists = (currentTrack.ar || (currentTrack as any).artists || [])
     .map((a: { name: string }) => a.name)
     .join(' / ')
@@ -119,6 +124,14 @@ export default function BottomPlayer() {
           <p className="text-sm font-medium truncate">{currentTrack.name}</p>
           <p className="text-xs text-gray-400 truncate">{artists}</p>
         </div>
+        <button
+          onClick={() => toggleFav(currentTrack)}
+          className={`shrink-0 p-1 transition-colors ${
+            fav ? 'text-red-500' : 'text-gray-400 hover:text-red-400'
+          }`}
+        >
+          <Heart size={18} fill={fav ? 'currentColor' : 'none'} />
+        </button>
       </div>
 
       {/* Controls */}

@@ -4,14 +4,11 @@ import { Search, X } from 'lucide-react'
 import { search, getSearchSuggest } from '../api/music'
 import { usePlayerStore } from '../stores/player'
 import TrackList from '../components/common/TrackList'
-import PlaylistCard from '../components/common/PlaylistCard'
 import type { Track } from '../api/types'
 
 const TABS = [
   { key: 1, label: '歌曲' },
   { key: 100, label: '歌手' },
-  { key: 10, label: '专辑' },
-  { key: 1000, label: '歌单' },
 ]
 
 export default function SearchPage() {
@@ -200,36 +197,6 @@ export default function SearchPage() {
             ))
           ) : (
             <p className="text-center text-gray-400 mt-12">未找到相关歌手</p>
-          )}
-        </div>
-      )}
-
-      {/* Results: Albums */}
-      {!loading && results && activeTab === 10 && (
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {results.albums?.length > 0 ? (
-            results.albums.map((album: any) => (
-              <div key={album.id} className="bg-white rounded-lg p-3 hover:shadow-md transition-shadow">
-                <img src={album.picUrl} alt="" className="w-full aspect-square object-cover rounded-md mb-2" />
-                <p className="text-sm font-medium truncate">{album.name}</p>
-                <p className="text-xs text-gray-400 truncate">{album.artist?.name}</p>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-400 mt-12 col-span-full">未找到相关专辑</p>
-          )}
-        </div>
-      )}
-
-      {/* Results: Playlists */}
-      {!loading && results && activeTab === 1000 && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {results.playlists?.length > 0 ? (
-            results.playlists.map((pl: any) => (
-              <PlaylistCard key={pl.id} playlist={pl} />
-            ))
-          ) : (
-            <p className="text-center text-gray-400 mt-12 col-span-full">未找到相关歌单</p>
           )}
         </div>
       )}

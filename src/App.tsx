@@ -5,6 +5,7 @@ import SearchPage from './pages/SearchPage'
 import PlaylistPage from './pages/PlaylistPage'
 import ToplistPage from './pages/ToplistPage'
 import ArtistPage from './pages/ArtistPage'
+import FavoritesPage from './pages/FavoritesPage'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/playlist/:id" element={<PlaylistPage />} />
           <Route path="/toplist" element={<ToplistPage />} />
           <Route path="/artist/:id" element={<ArtistPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
