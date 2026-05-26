@@ -35,7 +35,7 @@ export default function PlaylistPage() {
         setPlaylist(pl)
         const rawTracks = pl.tracks || []
         // Filter out trial songs (fee=1)
-        const playable = rawTracks.filter((t: any) => ![1, 4].includes(t.fee))
+        const playable = rawTracks.filter((t: any) => [0, 8].includes(t.fee))
         setAllTracks(playable)
         setTracks(playable.slice(0, 50))
       } catch (e) {
