@@ -186,7 +186,7 @@ export default function SearchPage() {
                 to={`/artist/${artist.id}`}
                 className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg"
               >
-                <img src={artist.picUrl || artist.img1v1Url} alt="" className="w-12 h-12 rounded-full object-cover" />
+                <img src={artist.picUrl || artist.img1v1Url} alt="" loading="lazy" className="w-12 h-12 rounded-full object-cover" />
                 <div>
                   <p className="text-sm font-medium">{artist.name}</p>
                   <p className="text-xs text-gray-400">

@@ -50,7 +50,7 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
               <img
                 src={track.al?.picUrl || (track as any).album?.picUrl}
                 alt=""
-                className="w-9 sm:w-10 h-9 sm:h-10 rounded object-cover shrink-0"
+                loading="lazy" className="w-9 sm:w-10 h-9 sm:h-10 rounded object-cover shrink-0"
               />
             )}
             <div className="flex-1 min-w-0">

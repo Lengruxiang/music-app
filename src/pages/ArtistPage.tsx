@@ -91,7 +91,7 @@ export default function ArtistPage() {
         <img
           src={artist.picUrl || artist.cover}
           alt={artist.name}
-          className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover shadow-lg shrink-0"
+          loading="lazy" className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover shadow-lg shrink-0"
         />
         <div className="flex flex-col justify-center text-center sm:text-left">
           <h2 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">{artist.name}</h2>
@@ -127,7 +127,7 @@ export default function ArtistPage() {
                 <img
                   src={album.picUrl}
                   alt={album.name}
-                  className="w-full aspect-square object-cover rounded-md mb-2"
+                  loading="lazy" className="w-full aspect-square object-cover rounded-md mb-2"
                 />
                 <p className="text-sm font-medium truncate">{album.name}</p>
                 {album.publishTime && (

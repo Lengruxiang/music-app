@@ -63,7 +63,7 @@ export default function ToplistPage() {
             <img
               src={item.coverImgUrl}
               alt={item.name}
-              className="w-24 h-24 rounded-lg object-cover shrink-0"
+              loading="lazy" className="w-24 h-24 rounded-lg object-cover shrink-0"
             />
             <div className="flex items-center min-w-0 py-0.5">
               <p className="text-sm font-bold line-clamp-2 leading-5">{item.name}</p>
