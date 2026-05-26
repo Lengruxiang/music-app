@@ -25,19 +25,19 @@ export default function DiscoverPage() {
     async function load() {
       try {
         const [cantoneseRes, hotRes, songRes] = await Promise.all([
-          getTopPlaylists('粤语', 30),
-          getTopPlaylists('华语', 30),
+          getTopPlaylists('粤语', 50),
+          getTopPlaylists('华语', 50),
           getNewSongs(0),
         ])
 
         setCantoneseList(
           (cantoneseRes.playlists || [])
-            .filter((p: any) => p.trackCount >= 50)
+            .filter((p: any) => p.trackCount >= 80)
             .sort((a: any, b: any) => b.playCount - a.playCount)
         )
         setHotPlaylists(
           (hotRes.playlists || [])
-            .filter((p: any) => p.trackCount >= 50)
+            .filter((p: any) => p.trackCount >= 80)
             .sort((a: any, b: any) => b.playCount - a.playCount)
         )
         setNewSongs(songRes.data || [])

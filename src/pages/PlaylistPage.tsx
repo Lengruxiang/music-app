@@ -33,9 +33,11 @@ export default function PlaylistPage() {
         const res = await getPlaylistDetail(Number(id))
         const pl = res.playlist || {}
         setPlaylist(pl)
-        const ts = pl.tracks || []
-        setAllTracks(ts)
-        setTracks(ts.slice(0, 50))
+        const rawTracks = pl.tracks || []
+        // Filter out trial songs (fee=1)
+        const playable = rawTracks.filter((t: any) => t.fee !== 1)
+        setAllTracks(playable)
+        setTracks(playable.slice(0, 50))
       } catch (e) {
         console.error('Failed to load playlist:', e)
       } finally {
@@ -104,7 +106,7 @@ export default function PlaylistPage() {
             <span>{playlist.creator?.nickname}</span>
           </div>
           <p className="text-xs sm:text-sm text-gray-400">
-            歌曲数：{playlist.trackCount} · 播放量：{(playlist.playCount / 10000).toFixed(1)}万
+            歌曲数：{allTracks.length} · 播放量：{(playlist.playCount / 10000).toFixed(1)}万
           </p>
           <button
             onClick={playAll}
