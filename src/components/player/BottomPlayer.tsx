@@ -74,6 +74,9 @@ export default function BottomPlayer() {
     }
   }
 
+  const toggleFav = useFavoritesStore((s) => s.toggle)
+  const favTracks = useFavoritesStore((s) => s.tracks)
+
   if (!currentTrack) {
     return (
       <div className="h-full flex items-center justify-center text-gray-400 text-sm">
@@ -83,9 +86,6 @@ export default function BottomPlayer() {
       </div>
     )
   }
-
-  const toggleFav = useFavoritesStore((s) => s.toggle)
-  const favTracks = useFavoritesStore((s) => s.tracks)
 
   const artists = (currentTrack.ar || (currentTrack as any).artists || [])
     .map((a: { name: string }) => a.name)
