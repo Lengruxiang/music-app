@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://d6f1d88a48e6f58e-111-55-25-166.serveousercontent.com/:path*"
+      "destination": "https://netease-cloud-music-api-two-ashen-33.vercel.app/:path*"
     },
     {
       "source": "/(.*)",
