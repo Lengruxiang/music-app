@@ -19,7 +19,11 @@ function loadFavorites(): Track[] {
 }
 
 function saveFavorites(tracks: Track[]) {
-  localStorage.setItem('melody-favorites', JSON.stringify(tracks))
+  try {
+    localStorage.setItem('melody-favorites', JSON.stringify(tracks))
+  } catch {
+    // localStorage full or unavailable, silently ignore
+  }
 }
 
 export const useFavoritesStore = create<FavoritesState>((set, get) => ({

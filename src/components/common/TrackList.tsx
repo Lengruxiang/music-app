@@ -1,6 +1,4 @@
-import { Heart } from 'lucide-react'
 import type { Track } from '../../api/types'
-import { useFavoritesStore } from '../../stores/favorites'
 
 interface Props {
   tracks: Track[]
@@ -17,7 +15,6 @@ function formatTime(ms: number) {
 }
 
 export default function TrackList({ tracks, onPlay, showCover = true, highlightId }: Props) {
-  const { toggle, has } = useFavoritesStore()
 
   if (!tracks || tracks.length === 0) return null
 
@@ -29,7 +26,6 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
     <div className="w-full">
       {filtered.map((track, i) => {
         const isActive = highlightId === track.id
-        const isFav = has(track.id)
         return (
           <div
             key={track.id}
@@ -62,16 +58,6 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
                   .join(' / ')}
               </p>
             </div>
-            <button
-              onClick={(e) => { e.stopPropagation(); toggle(track) }}
-              className={`shrink-0 p-1 transition-colors ${
-                isFav
-                  ? 'text-red-500'
-                  : 'text-gray-300 hover:text-red-400 opacity-0 group-hover:opacity-100'
-              }`}
-            >
-              <Heart size={16} fill={isFav ? 'currentColor' : 'none'} />
-            </button>
             <span className="text-xs text-gray-400 shrink-0 hidden sm:group-hover:block">
               {formatTime(track.dt || (track as any).duration || 0)}
             </span>
