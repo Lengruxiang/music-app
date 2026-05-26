@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "http://t32ba566.natappfree.cc/:path*"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
