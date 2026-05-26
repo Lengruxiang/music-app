@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import PlaylistCard from '../components/common/PlaylistCard'
 import TrackList from '../components/common/TrackList'
 import { getTopPlaylists, getNewSongs } from '../api/music'
@@ -21,7 +20,6 @@ export default function DiscoverPage() {
   const [loading, setLoading] = useState(true)
   const play = usePlayerStore((s) => s.play)
   const currentTrack = usePlayerStore((s) => s.currentTrack)
-  const navigate = useNavigate()
 
   useEffect(() => {
     async function load() {
@@ -33,10 +31,14 @@ export default function DiscoverPage() {
         ])
 
         setCantoneseList(
-          (cantoneseRes.playlists || []).filter((p: any) => p.trackCount >= 50)
+          (cantoneseRes.playlists || [])
+            .filter((p: any) => p.trackCount >= 50)
+            .sort((a: any, b: any) => b.playCount - a.playCount)
         )
         setHotPlaylists(
-          (hotRes.playlists || []).filter((p: any) => p.trackCount >= 50)
+          (hotRes.playlists || [])
+            .filter((p: any) => p.trackCount >= 50)
+            .sort((a: any, b: any) => b.playCount - a.playCount)
         )
         setNewSongs(songRes.data || [])
       } catch (e) {
@@ -83,12 +85,7 @@ export default function DiscoverPage() {
       {/* 粤语歌单 */}
       {cantoneseList.length > 0 && (
         <section>
-          <div className="flex items-center justify-between mb-3 sm:mb-4">
-            <h3 className="text-base sm:text-lg font-bold">
-              🎤 粤语歌单
-              <span className="text-xs text-gray-400 font-normal ml-2">50首以上</span>
-            </h3>
-          </div>
+          <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">粤语歌单</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             {cantoneseList.slice(0, 10).map((pl) => (
               <PlaylistCard key={pl.id} playlist={pl as any} />
@@ -100,18 +97,7 @@ export default function DiscoverPage() {
       {/* 华语热门歌单 */}
       {hotPlaylists.length > 0 && (
         <section>
-          <div className="flex items-center justify-between mb-3 sm:mb-4">
-            <h3 className="text-base sm:text-lg font-bold">
-              华语精选
-              <span className="text-xs text-gray-400 font-normal ml-2">50首以上</span>
-            </h3>
-            <button
-              onClick={() => navigate('/search?q=粤语')}
-              className="text-xs sm:text-sm text-gray-400 hover:text-red-500"
-            >
-              更多
-            </button>
-          </div>
+          <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">华语精选</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             {hotPlaylists.slice(0, 10).map((pl) => (
               <PlaylistCard key={pl.id} playlist={pl as any} />
