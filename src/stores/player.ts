@@ -83,8 +83,7 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
     }
 
     try {
-      const base = import.meta.env.DEV ? '/api' : 'http://t32ba566.natappfree.cc'
-      const res = await fetch(`${base}/song/url?id=${track.id}&br=320000`)
+      const res = await fetch(`/api/song/url?id=${track.id}&br=320000`)
       const data = await res.json()
       const item = data.data?.[0]
       const url = item?.url

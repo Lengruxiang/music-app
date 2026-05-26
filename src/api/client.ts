@@ -1,11 +1,7 @@
 import axios from 'axios'
 
-const baseURL = import.meta.env.DEV
-  ? '/api'
-  : 'http://t32ba566.natappfree.cc'
-
 const instance = axios.create({
-  baseURL,
+  baseURL: '/api',
   timeout: 30000,
 })
 
