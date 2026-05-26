@@ -18,7 +18,7 @@ export default function PlaylistCard({ playlist }: Props) {
     >
       <div className="relative aspect-square mb-2 overflow-hidden rounded-md">
         <img
-          src={playlist.coverImgUrl ?? playlist.picUrl}
+          src={playlist.coverImgUrl ?? (playlist as any).picUrl}
           alt={playlist.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
