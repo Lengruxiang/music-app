@@ -65,18 +65,8 @@ export default function ToplistPage() {
               alt={item.name}
               className="w-24 h-24 rounded-lg object-cover shrink-0"
             />
-            <div className="flex flex-col justify-between min-w-0 py-0.5">
-              <div>
-                <p className="text-sm font-medium line-clamp-2 leading-5">{item.name}</p>
-                <p className="text-xs text-gray-400 mt-1">{item.updateFrequency}</p>
-              </div>
-              <ol className="text-xs text-gray-400">
-                {item.tracks?.slice(0, 3).map((t, i) => (
-                  <li key={t.id} className="truncate">
-                    {i + 1}. {t.name} - {(t.ar || []).map((a) => a.name).join('/')}
-                  </li>
-                ))}
-              </ol>
+            <div className="flex items-center min-w-0 py-0.5">
+              <p className="text-sm font-bold line-clamp-2 leading-5">{item.name}</p>
             </div>
           </div>
         ))}
