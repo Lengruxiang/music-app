@@ -85,7 +85,7 @@ export default function BottomPlayer() {
   }
 
   const toggleFav = useFavoritesStore((s) => s.toggle)
-  const isFav = useFavoritesStore((s) => s.has)
+  const favTracks = useFavoritesStore((s) => s.tracks)
 
   const artists = (currentTrack.ar || (currentTrack as any).artists || [])
     .map((a: { name: string }) => a.name)
@@ -126,9 +126,9 @@ export default function BottomPlayer() {
         </div>
         <button
           onClick={() => toggleFav(currentTrack)}
-          className={`shrink-0 p-1 ${isFav(currentTrack.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-400'}`}
+          className={`shrink-0 p-1 ${favTracks.some((t: any) => t.id === currentTrack.id) ? 'text-red-500' : 'text-gray-400 hover:text-red-400'}`}
         >
-          <Heart size={18} fill={isFav(currentTrack.id) ? 'currentColor' : 'none'} />
+          <Heart size={18} fill={favTracks.some((t: any) => t.id === currentTrack.id) ? 'currentColor' : 'none'} />
         </button>
       </div>
 

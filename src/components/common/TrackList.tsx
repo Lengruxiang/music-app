@@ -18,7 +18,7 @@ function formatTime(ms: number) {
 
 export default function TrackList({ tracks, onPlay, showCover = true, highlightId }: Props) {
   const toggleFav = useFavoritesStore((s) => s.toggle)
-  const isFav = useFavoritesStore((s) => s.has)
+  const favTracks = useFavoritesStore((s) => s.tracks)
 
   if (!tracks || tracks.length === 0) return null
 
@@ -30,7 +30,7 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
     <div className="w-full">
       {filtered.map((track, i) => {
         const active = highlightId === track.id
-        const fav = isFav(track.id)
+        const fav = !!favTracks.find((t: any) => t.id === track.id)
         return (
           <div
             key={track.id}
