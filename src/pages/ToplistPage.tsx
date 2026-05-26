@@ -51,7 +51,7 @@ export default function ToplistPage() {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-3 sm:p-6">
       <h2 className="text-lg font-bold mb-4">排行榜</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {lists.map((item) => (

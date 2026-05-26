@@ -63,11 +63,11 @@ export default function DiscoverPage() {
   }
 
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-3 sm:p-6 space-y-6 sm:space-y-8">
       {/* Banner Area */}
-      <div className="bg-gradient-to-r from-red-500 to-pink-400 rounded-xl p-8 text-white">
-        <h2 className="text-2xl font-bold mb-2">发现音乐</h2>
-        <p className="text-white/80 text-sm">探索你喜欢的音乐，发现新的旋律</p>
+      <div className="bg-gradient-to-r from-red-500 to-pink-400 rounded-xl p-4 sm:p-8 text-white">
+        <h2 className="text-lg sm:text-2xl font-bold mb-1 sm:mb-2">发现音乐</h2>
+        <p className="text-white/80 text-xs sm:text-sm">探索你喜欢的音乐，发现新的旋律</p>
       </div>
 
       {/* 推荐歌单 */}

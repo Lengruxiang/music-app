@@ -12,16 +12,29 @@
   --color-player: #ffffff;
 }
 
+html {
+  overscroll-behavior: none;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 #root {
-  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Mobile touch-friendly: bigger tap targets */
+@media (max-width: 640px) {
+  button, a {
+    min-height: 24px;
+  }
 }
 
 ::-webkit-scrollbar {

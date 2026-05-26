@@ -85,21 +85,21 @@ export default function ArtistPage() {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-3 sm:p-6">
       {/* Artist header */}
-      <div className="flex gap-6 mb-8">
+      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 mb-6 sm:mb-8">
         <img
           src={artist.picUrl || artist.cover}
           alt={artist.name}
-          className="w-40 h-40 rounded-full object-cover shadow-lg shrink-0"
+          className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover shadow-lg shrink-0"
         />
-        <div className="flex flex-col justify-center">
-          <h2 className="text-2xl font-bold mb-2">{artist.name}</h2>
-          <p className="text-sm text-gray-400">
+        <div className="flex flex-col justify-center text-center sm:text-left">
+          <h2 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">{artist.name}</h2>
+          <p className="text-xs sm:text-sm text-gray-400">
             专辑：{artist.albumSize} · 歌曲：{artist.musicSize}
           </p>
           {artist.briefDesc && (
-            <p className="text-sm text-gray-500 mt-2 line-clamp-2 max-w-md">
+            <p className="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2 line-clamp-2 max-w-md">
               {artist.briefDesc}
             </p>
           )}
@@ -121,7 +121,7 @@ export default function ArtistPage() {
       {albums.length > 0 && (
         <section>
           <h3 className="text-lg font-bold mb-3">专辑</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             {albums.map((album) => (
               <div key={album.id} className="bg-white rounded-lg p-3 hover:shadow-md transition-shadow">
                 <img

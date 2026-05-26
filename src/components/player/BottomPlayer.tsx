@@ -76,7 +76,8 @@ export default function BottomPlayer() {
     return (
       <div className="h-full flex items-center justify-center text-gray-400 text-sm">
         <Music size={18} className="mr-2" />
-        选择一首歌曲开始播放
+        <span className="hidden sm:inline">选择一首歌曲开始播放</span>
+        <span className="sm:hidden">暂无播放</span>
       </div>
     )
   }
@@ -88,25 +89,25 @@ export default function BottomPlayer() {
   const coverUrl = currentTrack.al?.picUrl || (currentTrack as any).album?.picUrl
 
   return (
-    <div className="h-full flex items-center px-4 gap-4 relative">
+    <div className="h-full flex items-center px-2 sm:px-4 gap-2 sm:gap-4 relative">
       {/* Error toast */}
       {error && (
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-red-50 border border-red-200 text-red-600 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 whitespace-nowrap shadow-sm">
-          <AlertCircle size={14} />
-          {error}
-          <button onClick={clearError} className="hover:text-red-800">
+        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-red-50 border border-red-200 text-red-600 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 whitespace-nowrap shadow-sm z-10 max-w-[calc(100vw-16px)]">
+          <AlertCircle size={14} className="shrink-0" />
+          <span className="truncate">{error}</span>
+          <button onClick={clearError} className="hover:text-red-800 shrink-0">
             <X size={14} />
           </button>
         </div>
       )}
 
-      {/* Song info */}
-      <div className="flex items-center gap-3 w-56 shrink-0">
+      {/* Song info - hidden on mobile */}
+      <div className="hidden sm:flex items-center gap-3 w-44 lg:w-56 shrink-0">
         <div className="relative">
           <img
             src={coverUrl}
             alt=""
-            className={`w-12 h-12 rounded-md object-cover shrink-0 ${isLoading ? 'opacity-50' : ''}`}
+            className={`w-10 lg:w-12 h-10 lg:h-12 rounded-md object-cover shrink-0 ${isLoading ? 'opacity-50' : ''}`}
           />
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -121,20 +122,41 @@ export default function BottomPlayer() {
       </div>
 
       {/* Controls */}
-      <div className="flex-1 flex flex-col items-center gap-1 max-w-2xl mx-auto">
-        <div className="flex items-center gap-4">
+      <div className="flex-1 flex flex-col items-center gap-0.5 sm:gap-1 mx-auto max-w-xl">
+        {/* Progress bar - touch-friendly on mobile, larger hit area */}
+        <div className="flex items-center gap-2 w-full text-xs text-gray-400">
+          <span className="w-8 sm:w-10 text-right tabular-nums">{formatTime(progress)}</span>
+          <div
+            ref={progressRef}
+            className="flex-1 h-2 sm:h-1.5 bg-gray-200 rounded-full cursor-pointer group relative"
+            onClick={handleProgressClick}
+          >
+            <div
+              className={`h-full rounded-full relative transition-all duration-150 ${
+                isLoading ? 'bg-red-300' : 'bg-red-500'
+              }`}
+              style={{ width: `${duration > 0 ? (progress / duration) * 100 : 0}%` }}
+            >
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-red-500 rounded-full sm:opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+          </div>
+          <span className="w-8 sm:w-10 tabular-nums">{formatTime(duration)}</span>
+        </div>
+
+        {/* Buttons row */}
+        <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={prev}
             disabled={isLoading}
-            className="text-gray-500 hover:text-gray-800 transition-colors disabled:opacity-30"
+            className="text-gray-500 hover:text-gray-800 transition-colors disabled:opacity-30 p-1"
             title="上一首"
           >
-            <SkipBack size={20} className="fill-gray-500" />
+            <SkipBack size={18} className="fill-gray-500" />
           </button>
           <button
             onClick={togglePlay}
             disabled={isLoading}
-            className="w-9 h-9 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center text-white transition-colors disabled:opacity-50"
+            className="w-9 h-9 sm:w-9 sm:h-9 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center text-white transition-colors disabled:opacity-50"
             title={isPlaying ? '暂停' : '播放'}
           >
             {isLoading ? (
@@ -148,42 +170,22 @@ export default function BottomPlayer() {
           <button
             onClick={next}
             disabled={isLoading}
-            className="text-gray-500 hover:text-gray-800 transition-colors disabled:opacity-30"
+            className="text-gray-500 hover:text-gray-800 transition-colors disabled:opacity-30 p-1"
             title="下一首"
           >
-            <SkipForward size={20} className="fill-gray-500" />
+            <SkipForward size={18} className="fill-gray-500" />
           </button>
-        </div>
-
-        {/* Progress bar */}
-        <div className="flex items-center gap-2 w-full text-xs text-gray-400">
-          <span className="w-10 text-right">{formatTime(progress)}</span>
-          <div
-            ref={progressRef}
-            className="flex-1 h-1.5 bg-gray-200 rounded-full cursor-pointer group relative"
-            onClick={handleProgressClick}
-          >
-            <div
-              className={`h-full rounded-full relative transition-all duration-150 ${
-                isLoading ? 'bg-red-300' : 'bg-red-500'
-              }`}
-              style={{ width: `${duration > 0 ? (progress / duration) * 100 : 0}%` }}
-            >
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-          </div>
-          <span className="w-10">{formatTime(duration)}</span>
         </div>
       </div>
 
-      {/* Volume + Playlist info */}
-      <div className="flex items-center gap-3 w-56 shrink-0 justify-end">
+      {/* Volume + Playlist info - hidden on mobile, compact on desktop */}
+      <div className="hidden sm:flex items-center gap-3 w-44 lg:w-56 shrink-0 justify-end">
         <button onClick={toggleMute} className="text-gray-500 hover:text-gray-800">
           {volume === 0 ? <VolumeX size={18} /> : <Volume2 size={18} />}
         </button>
         <div
           ref={volumeRef}
-          className="w-20 h-1.5 bg-gray-200 rounded-full cursor-pointer group"
+          className="w-16 lg:w-20 h-1.5 bg-gray-200 rounded-full cursor-pointer group"
           onClick={handleVolumeClick}
         >
           <div
@@ -193,8 +195,8 @@ export default function BottomPlayer() {
             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-gray-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
         </div>
-        <span className="text-xs text-gray-400 w-16 text-right">
-          {playlist.length > 0 ? `${playlistIndex + 1} / ${playlist.length}` : ''}
+        <span className="text-xs text-gray-400">
+          {playlist.length > 0 ? `${playlistIndex + 1}/${playlist.length}` : ''}
         </span>
       </div>
     </div>

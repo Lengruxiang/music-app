@@ -98,7 +98,7 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="p-3 sm:p-6 max-w-4xl mx-auto">
       {/* Search input */}
       <div className="relative mb-6">
         <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />

@@ -57,9 +57,9 @@ export default function PlaylistPage() {
 
   if (loading) {
     return (
-      <div className="p-6 animate-pulse space-y-6">
-        <div className="flex gap-6">
-          <div className="w-48 h-48 bg-gray-200 rounded-xl shrink-0" />
+      <div className="p-3 sm:p-6 animate-pulse space-y-6">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+          <div className="w-40 h-40 sm:w-48 sm:h-48 bg-gray-200 rounded-xl shrink-0 mx-auto sm:mx-0" />
           <div className="flex-1 space-y-3">
             <div className="h-6 bg-gray-200 rounded w-1/3" />
             <div className="h-4 bg-gray-200 rounded w-1/4" />
@@ -84,31 +84,31 @@ export default function PlaylistPage() {
   }
 
   return (
-    <div className="p-6">
-      {/* Header */}
-      <div className="flex gap-6 mb-8">
+    <div className="p-3 sm:p-6">
+      {/* Header - stacked on mobile, side-by-side on desktop */}
+      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-6 sm:mb-8">
         <img
           src={playlist.coverImgUrl}
           alt={playlist.name}
-          className="w-48 h-48 rounded-xl object-cover shadow-lg shrink-0"
+          className="w-40 h-40 sm:w-48 sm:h-48 rounded-xl object-cover shadow-lg shrink-0 mx-auto sm:mx-0"
         />
-        <div className="flex flex-col justify-end min-w-0">
-          <p className="text-xs text-gray-400 mb-2">歌单</p>
-          <h2 className="text-2xl font-bold mb-3 truncate">{playlist.name}</h2>
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
+        <div className="flex flex-col justify-end min-w-0 text-center sm:text-left">
+          <p className="text-xs text-gray-400 mb-1 sm:mb-2">歌单</p>
+          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-3 truncate">{playlist.name}</h2>
+          <div className="flex items-center gap-2 text-sm text-gray-500 mb-2 sm:mb-3 justify-center sm:justify-start">
             <img
               src={playlist.creator?.avatarUrl}
               alt=""
-              className="w-6 h-6 rounded-full"
+              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full"
             />
             <span>{playlist.creator?.nickname}</span>
           </div>
-          <p className="text-sm text-gray-400">
+          <p className="text-xs sm:text-sm text-gray-400">
             歌曲数：{playlist.trackCount} · 播放量：{(playlist.playCount / 10000).toFixed(1)}万
           </p>
           <button
             onClick={playAll}
-            className="mt-4 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full flex items-center gap-2 text-sm font-medium transition-colors self-start"
+            className="mt-3 sm:mt-4 bg-red-500 hover:bg-red-600 text-white px-5 sm:px-6 py-2 rounded-full flex items-center gap-2 text-sm font-medium transition-colors mx-auto sm:mx-0 self-center sm:self-start"
           >
             <Play size={18} fill="white" /> 播放全部
           </button>
