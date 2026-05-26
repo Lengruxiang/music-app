@@ -1,4 +1,6 @@
+import { Heart } from 'lucide-react'
 import type { Track } from '../../api/types'
+import { useFavoritesStore } from '../../stores/favorites'
 
 interface Props {
   tracks: Track[]
@@ -15,6 +17,8 @@ function formatTime(ms: number) {
 }
 
 export default function TrackList({ tracks, onPlay, showCover = true, highlightId }: Props) {
+  const toggleFav = useFavoritesStore((s) => s.toggle)
+  const isFav = useFavoritesStore((s) => s.has)
 
   if (!tracks || tracks.length === 0) return null
 
@@ -25,17 +29,18 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
   return (
     <div className="w-full">
       {filtered.map((track, i) => {
-        const isActive = highlightId === track.id
+        const active = highlightId === track.id
+        const fav = isFav(track.id)
         return (
           <div
             key={track.id}
             className={`flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-2 rounded-md cursor-pointer group transition-colors ${
-              isActive ? 'bg-red-50 text-red-500' : 'hover:bg-gray-50'
+              active ? 'bg-red-50 text-red-500' : 'hover:bg-gray-50'
             }`}
             onClick={() => onPlay(track)}
           >
             <span className="w-6 sm:w-8 text-center text-xs sm:text-sm text-gray-400 shrink-0">
-              {isActive ? (
+              {active ? (
                 <span className="inline-block w-3 h-3 bg-red-500 rounded-sm" />
               ) : (
                 i + 1
@@ -49,7 +54,7 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
               />
             )}
             <div className="flex-1 min-w-0">
-              <p className={`text-sm truncate ${isActive ? 'text-red-500' : ''}`}>
+              <p className={`text-sm truncate ${active ? 'text-red-500' : ''}`}>
                 {track.name}
               </p>
               <p className="text-xs text-gray-400 truncate">
@@ -58,6 +63,16 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
                   .join(' / ')}
               </p>
             </div>
+            <button
+              onClick={(e) => { e.stopPropagation(); toggleFav(track) }}
+              className={`shrink-0 p-1 ${
+                fav
+                  ? 'text-red-500'
+                  : 'text-gray-300 hover:text-red-400 opacity-0 group-hover:opacity-100 sm:opacity-0'
+              }`}
+            >
+              <Heart size={16} fill={fav ? 'currentColor' : 'none'} />
+            </button>
             <span className="text-xs text-gray-400 shrink-0 hidden sm:group-hover:block">
               {formatTime(track.dt || (track as any).duration || 0)}
             </span>
