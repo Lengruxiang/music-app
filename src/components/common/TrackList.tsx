@@ -17,9 +17,13 @@ function formatTime(ms: number) {
 export default function TrackList({ tracks, onPlay, showCover = true, highlightId }: Props) {
   if (!tracks || tracks.length === 0) return null
 
+  const filtered = tracks.filter((t) => (t as any).fee !== 1)
+
+  if (filtered.length === 0) return null
+
   return (
     <div className="w-full">
-      {tracks.map((track, i) => {
+      {filtered.map((track, i) => {
         const isActive = highlightId === track.id
         return (
           <div
@@ -54,11 +58,7 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
               </p>
             </div>
             <span className="text-xs text-gray-400 shrink-0 hidden group-hover:block">
-              {(track as any).fee === 1 ? (
-                <span className="text-orange-400">试听</span>
-              ) : (
-                formatTime(track.dt || (track as any).duration || 0)
-              )}
+              {formatTime(track.dt || (track as any).duration || 0)}
             </span>
           </div>
         )
