@@ -61,7 +61,7 @@ export default function DiscoverPage() {
 
         setSectionA({ cat: cats[0], list: processPlaylists(resA.playlists || []) })
         setSectionB({ cat: cats[1], list: processPlaylists(resB.playlists || []) })
-        setNewSongs(shuffle(songRes.data || []).slice(0, 20))
+        setNewSongs(shuffle((songRes.data || []) as Track[]).slice(0, 20))
       } catch (e) {
         console.error('Failed to load discover page:', e)
       } finally {
