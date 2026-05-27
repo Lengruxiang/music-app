@@ -35,11 +35,7 @@ function getAudio() {
 }
 
 function proxyUrl(url: string) {
-  // Dev: use local Vite audio proxy; Prod: use HTTPS CDN directly
-  if (import.meta.env.DEV) {
-    return `/audio-proxy?url=${encodeURIComponent(url)}`
-  }
-  return url.replace(/^http:\/\//, 'https://')
+  return `/api/audio-proxy?url=${encodeURIComponent(url)}`
 }
 
 export const usePlayerStore = create<PlayerState>((set, get) => ({
