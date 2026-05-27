@@ -62,7 +62,7 @@ export default function ToplistPage() {
             className="flex gap-3 bg-white rounded-lg p-3 cursor-pointer hover:shadow-md transition-shadow"
           >
             <img
-              src={fixImg(item.coverImgUrl)}
+              src={fixImg(item.coverImgUrl, 300)}
               alt={item.name}
               loading="lazy" className="w-24 h-24 rounded-lg object-cover shrink-0"
             />

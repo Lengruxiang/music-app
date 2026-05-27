@@ -91,7 +91,7 @@ export default function PlaylistPage() {
       {/* Header - stacked on mobile, side-by-side on desktop */}
       <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-6 sm:mb-8">
         <img
-          src={fixImg(playlist.coverImgUrl)}
+          src={fixImg(playlist.coverImgUrl, 400)}
           alt={playlist.name}
           className="w-40 h-40 sm:w-48 sm:h-48 rounded-xl object-cover shadow-lg shrink-0 mx-auto sm:mx-0"
         />
@@ -100,7 +100,7 @@ export default function PlaylistPage() {
           <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-3 truncate">{playlist.name}</h2>
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-2 sm:mb-3 justify-center sm:justify-start">
             <img
-              src={fixImg(playlist.creator?.avatarUrl)}
+              src={fixImg(playlist.creator?.avatarUrl, 120)}
               alt=""
               className="w-5 h-5 sm:w-6 sm:h-6 rounded-full"
             />

@@ -92,7 +92,7 @@ export default function BottomPlayer() {
     .map((a: { name: string }) => a.name)
     .join(' / ')
 
-  const coverUrl = fixImg(currentTrack.al?.picUrl || (currentTrack as any).album?.picUrl)
+  const coverUrl = fixImg(currentTrack.al?.picUrl || (currentTrack as any).album?.picUrl, 200)
 
   return (
     <div className="h-full flex items-center px-2 sm:px-4 gap-2 sm:gap-4 relative">

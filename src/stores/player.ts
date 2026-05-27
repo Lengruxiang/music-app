@@ -80,7 +80,7 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
     }
 
     try {
-      const res = await fetch(`/api/song/url?id=${track.id}&br=320000`)
+      const res = await fetch(`/api/song/url?id=${track.id}&br=128000`)
       const data = await res.json()
       const item = data.data?.[0]
       const url = item?.url
