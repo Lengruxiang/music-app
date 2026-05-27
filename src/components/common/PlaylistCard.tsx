@@ -15,6 +15,22 @@ const GRADIENTS = [
   'from-gray-300 to-slate-400',
 ]
 
+function simplifyName(name: string): string {
+  // Split on common delimiters, take first part
+  const parts = name.split(/[|｜·—，,!！\-—]/)
+  let clean = parts[0].trim()
+
+  // Remove year prefix like "2026" at start
+  clean = clean.replace(/^\d{4}\s*/, '')
+
+  // Trim very long names
+  if (clean.length > 12) {
+    clean = clean.slice(0, 10) + '…'
+  }
+
+  return clean || name.slice(0, 10) + '…'
+}
+
 function gradientClass(name: string): string {
   let hash = 0
   for (let i = 0; i < name.length; i++) {
@@ -42,7 +58,7 @@ export default function PlaylistCard({ playlist }: Props) {
           </div>
         </div>
       </div>
-      <p className="text-sm font-medium text-[var(--text)] line-clamp-2 leading-5">{playlist.name}</p>
+      <p className="text-sm font-medium text-[var(--text)] line-clamp-1 leading-5">{simplifyName(playlist.name)}</p>
     </Link>
   )
 }
