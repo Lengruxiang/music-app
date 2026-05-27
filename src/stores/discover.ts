@@ -10,15 +10,15 @@ interface SimplePlaylist {
 }
 
 interface DiscoverState {
-  sectionA: { cat: string; list: SimplePlaylist[] }
-  sectionB: { cat: string; list: SimplePlaylist[] }
+  cantonese: SimplePlaylist[]
+  randomSection: { cat: string; list: SimplePlaylist[] }
   newSongs: Track[]
   songTypeLabel: string
   loading: boolean
   loaded: boolean
   setData: (data: {
-    sectionA: { cat: string; list: SimplePlaylist[] }
-    sectionB: { cat: string; list: SimplePlaylist[] }
+    cantonese: SimplePlaylist[]
+    randomSection: { cat: string; list: SimplePlaylist[] }
     newSongs: Track[]
     songTypeLabel: string
   }) => void
@@ -26,8 +26,8 @@ interface DiscoverState {
 }
 
 export const useDiscoverStore = create<DiscoverState>((set) => ({
-  sectionA: { cat: '', list: [] },
-  sectionB: { cat: '', list: [] },
+  cantonese: [],
+  randomSection: { cat: '', list: [] },
   newSongs: [],
   songTypeLabel: '',
   loading: true,

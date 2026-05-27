@@ -6,7 +6,7 @@ import { usePlayerStore } from '../stores/player'
 import { useDiscoverStore } from '../stores/discover'
 import type { Track } from '../api/types'
 
-const CATEGORY_POOL = ['粤语', '华语', '欧美', '日语', '韩语', '电子', '摇滚', '民谣', '说唱', '古风', '轻音乐', 'R&B']
+const CATEGORY_POOL = ['华语', '欧美', '日语', '韩语', '电子', '摇滚', '民谣', '说唱', '古风', '轻音乐', 'R&B']
 const NEW_SONG_TYPES = [0, 7, 96, 8, 16]
 
 function shuffle<T>(arr: T[]): T[] {
@@ -32,7 +32,7 @@ export default function DiscoverPage() {
     if (fetching.current) return
     fetching.current = true
 
-    const cats = pick(CATEGORY_POOL, 2)
+    const randomCat = pick(CATEGORY_POOL, 1)[0]
     const songType = NEW_SONG_TYPES[Math.floor(Math.random() * NEW_SONG_TYPES.length)]
     const songLabels: Record<number, string> = { 0: '新歌', 7: '华语新歌', 96: '欧美新歌', 8: '日语新歌', 16: '韩语新歌' }
 
@@ -40,9 +40,9 @@ export default function DiscoverPage() {
 
     async function load() {
       try {
-        const [resA, resB, songRes] = await Promise.all([
-          getTopPlaylists(cats[0], 100),
-          getTopPlaylists(cats[1], 100),
+        const [cantoneseRes, randomRes, songRes] = await Promise.all([
+          getTopPlaylists('粤语', 100),
+          getTopPlaylists(randomCat, 100),
           getNewSongs(songType),
         ])
 
@@ -54,8 +54,8 @@ export default function DiscoverPage() {
           ).slice(0, 12)
 
         store.setData({
-          sectionA: { cat: cats[0], list: processPlaylists(resA.playlists || []) },
-          sectionB: { cat: cats[1], list: processPlaylists(resB.playlists || []) },
+          cantonese: processPlaylists(cantoneseRes.playlists || []),
+          randomSection: { cat: randomCat, list: processPlaylists(randomRes.playlists || []) },
           newSongs: shuffle((songRes.data || []) as Track[]).slice(0, 20),
           songTypeLabel: songLabels[songType] || '新歌',
         })
@@ -106,29 +106,30 @@ export default function DiscoverPage() {
         </div>
       </div>
 
-      {/* Section A */}
-      {store.sectionA.list.length > 0 && (
+      {/* 粤语歌单 - 常驻 */}
+      {store.cantonese.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{store.sectionA.cat} 歌单</h3>
-            <span className="text-xs text-[var(--text-tertiary)]">{store.sectionA.list.length} 个</span>
+            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">粤语歌单</h3>
+            <span className="text-xs text-[var(--text-tertiary)]">{store.cantonese.length} 个</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
-            {store.sectionA.list.map((pl) => (
+            {store.cantonese.map((pl) => (
               <PlaylistCard key={pl.id} playlist={pl as any} />
             ))}
           </div>
         </section>
       )}
 
-      {store.sectionB.list.length > 0 && (
+      {/* 随机歌单 */}
+      {store.randomSection.list.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{store.sectionB.cat} 歌单</h3>
-            <span className="text-xs text-[var(--text-tertiary)]">{store.sectionB.list.length} 个</span>
+            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{store.randomSection.cat} 歌单</h3>
+            <span className="text-xs text-[var(--text-tertiary)]">{store.randomSection.list.length} 个</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
-            {store.sectionB.list.map((pl) => (
+            {store.randomSection.list.map((pl) => (
               <PlaylistCard key={pl.id} playlist={pl as any} />
             ))}
           </div>
