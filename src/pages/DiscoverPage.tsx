@@ -5,6 +5,9 @@ import { getTopPlaylists, getNewSongs } from '../api/music'
 import { usePlayerStore } from '../stores/player'
 import type { Track } from '../api/types'
 
+const CATEGORY_POOL = ['粤语', '华语', '欧美', '日语', '韩语', '电子', '摇滚', '民谣', '说唱', '古风', '轻音乐', 'R&B']
+const NEW_SONG_TYPES = [0, 7, 96, 8, 16] // 全部, 华语, 欧美, 日本, 韩国
+
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr]
   for (let i = a.length - 1; i > 0; i--) {
@@ -12,6 +15,10 @@ function shuffle<T>(arr: T[]): T[] {
     [a[i], a[j]] = [a[j], a[i]]
   }
   return a
+}
+
+function pick<T>(arr: T[], n: number): T[] {
+  return shuffle([...arr]).slice(0, n)
 }
 
 interface SimplePlaylist {
@@ -23,37 +30,38 @@ interface SimplePlaylist {
 }
 
 export default function DiscoverPage() {
-  const [cantoneseList, setCantoneseList] = useState<SimplePlaylist[]>([])
-  const [hotPlaylists, setHotPlaylists] = useState<SimplePlaylist[]>([])
+  const [sectionA, setSectionA] = useState<{ cat: string; list: SimplePlaylist[] }>({ cat: '', list: [] })
+  const [sectionB, setSectionB] = useState<{ cat: string; list: SimplePlaylist[] }>({ cat: '', list: [] })
   const [newSongs, setNewSongs] = useState<Track[]>([])
+  const [songTypeLabel, setSongTypeLabel] = useState('')
   const [loading, setLoading] = useState(true)
   const play = usePlayerStore((s) => s.play)
   const currentTrack = usePlayerStore((s) => s.currentTrack)
 
   useEffect(() => {
+    const cats = pick(CATEGORY_POOL, 2)
+    const songType = NEW_SONG_TYPES[Math.floor(Math.random() * NEW_SONG_TYPES.length)]
+    const songLabels: Record<number, string> = { 0: '新歌速递', 7: '华语新歌', 96: '欧美新歌', 8: '日语新歌', 16: '韩语新歌' }
+    setSongTypeLabel(songLabels[songType] || '新歌速递')
+
     async function load() {
       try {
-        const [cantoneseRes, hotRes, songRes] = await Promise.all([
-          getTopPlaylists('粤语', 50),
-          getTopPlaylists('华语', 50),
-          getNewSongs(0),
+        const [resA, resB, songRes] = await Promise.all([
+          getTopPlaylists(cats[0], 100),
+          getTopPlaylists(cats[1], 100),
+          getNewSongs(songType),
         ])
 
-        setCantoneseList(
+        const processPlaylists = (list: any[]) =>
           shuffle(
-            (cantoneseRes.playlists || [])
-              .filter((p: any) => p.trackCount >= 80)
+            (list || [])
+              .filter((p: any) => p.trackCount >= 50)
               .sort((a: any, b: any) => b.playCount - a.playCount)
-          )
-        )
-        setHotPlaylists(
-          shuffle(
-            (hotRes.playlists || [])
-              .filter((p: any) => p.trackCount >= 80)
-              .sort((a: any, b: any) => b.playCount - a.playCount)
-          )
-        )
-        setNewSongs(shuffle(songRes.data || []))
+          ).slice(0, 12)
+
+        setSectionA({ cat: cats[0], list: processPlaylists(resA.playlists || []) })
+        setSectionB({ cat: cats[1], list: processPlaylists(resB.playlists || []) })
+        setNewSongs(shuffle(songRes.data || []).slice(0, 20))
       } catch (e) {
         console.error('Failed to load discover page:', e)
       } finally {
@@ -97,34 +105,38 @@ export default function DiscoverPage() {
         </div>
         <div className="relative">
           <h2 className="text-2xl sm:text-4xl font-bold mb-2 text-white">发现音乐</h2>
-          <p className="text-sm sm:text-base text-[#9ca3af] max-w-md">探索你喜欢的音乐，发现无限可能</p>
+          <p className="text-sm sm:text-base text-[#9ca3af] max-w-md">每次刷新都有新发现，探索无限音乐世界</p>
         </div>
       </div>
 
-      {/* 粤语歌单 */}
-      {cantoneseList.length > 0 && (
+      {/* Section A */}
+      {sectionA.list.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg sm:text-xl font-bold text-white">粤语歌单</h3>
-            <span className="text-xs text-[#6b7280]">{cantoneseList.length} 个歌单</span>
+            <h3 className="text-lg sm:text-xl font-bold text-white">
+              <span className="text-[#ff4757]">{sectionA.cat}</span> · 精选歌单
+            </h3>
+            <span className="text-xs text-[#6b7280]">{sectionA.list.length} 个</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
-            {cantoneseList.slice(0, 12).map((pl) => (
+            {sectionA.list.map((pl) => (
               <PlaylistCard key={pl.id} playlist={pl as any} />
             ))}
           </div>
         </section>
       )}
 
-      {/* 华语精选 */}
-      {hotPlaylists.length > 0 && (
+      {/* Section B */}
+      {sectionB.list.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg sm:text-xl font-bold text-white">华语精选</h3>
-            <span className="text-xs text-[#6b7280]">{hotPlaylists.length} 个歌单</span>
+            <h3 className="text-lg sm:text-xl font-bold text-white">
+              <span className="text-[#ff4757]">{sectionB.cat}</span> · 精选歌单
+            </h3>
+            <span className="text-xs text-[#6b7280]">{sectionB.list.length} 个</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
-            {hotPlaylists.slice(0, 12).map((pl) => (
+            {sectionB.list.map((pl) => (
               <PlaylistCard key={pl.id} playlist={pl as any} />
             ))}
           </div>
@@ -134,7 +146,8 @@ export default function DiscoverPage() {
       {/* 新歌速递 */}
       <section>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg sm:text-xl font-bold text-white">新歌速递</h3>
+          <h3 className="text-lg sm:text-xl font-bold text-white">{songTypeLabel}</h3>
+          <span className="text-xs text-[#6b7280]">{newSongs.length} 首</span>
         </div>
         <TrackList
           tracks={newSongs}

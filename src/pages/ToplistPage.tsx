@@ -13,6 +13,10 @@ function shuffle<T>(arr: T[]): T[] {
   return a
 }
 
+function pick<T>(arr: T[], n: number): T[] {
+  return shuffle([...arr]).slice(0, n)
+}
+
 interface ToplistItem {
   id: number
   name: string
@@ -30,7 +34,7 @@ export default function ToplistPage() {
     async function load() {
       try {
         const res = await getToplistDetail()
-        setLists(shuffle(res.list || []))
+        setLists(pick(res.list || [], 18))
       } catch (e) {
         console.error('Failed to load toplists:', e)
       } finally {
