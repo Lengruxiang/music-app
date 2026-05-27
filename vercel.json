@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://t32ba566.natappfree.cc/:path*"
+      "destination": "http://47.104.156.142/:path*"
     },
     {
       "source": "/(.*)",
