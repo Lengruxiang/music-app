@@ -36,11 +36,11 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
           <div
             key={track.id}
             className={`flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-2 rounded-md cursor-pointer group transition-all duration-200 ${
-              active ? 'bg-[#ff4757]/10 text-[#ff4757]' : 'hover:bg-white/5'
+              active ? 'bg-[var(--active-bg)] text-[#ff4757]' : 'hover:bg-[var(--hover-bg)]'
             }`}
             onClick={() => onPlay(track)}
           >
-            <span className={`w-6 sm:w-8 text-center text-xs sm:text-sm shrink-0 ${active ? 'text-[#ff4757]' : 'text-[#6b7280]'}`}>
+            <span className={`w-6 sm:w-8 text-center text-xs sm:text-sm shrink-0 ${active ? 'text-[#ff4757]' : 'text-[var(--text-tertiary)]'}`}>
               {active ? (
                 <span className="inline-block w-3 h-3 bg-[#ff4757] rounded-sm" />
               ) : (
@@ -55,10 +55,10 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
               />
             )}
             <div className="flex-1 min-w-0">
-              <p className={`text-sm truncate ${active ? 'text-[#ff4757]' : 'text-white'}`}>
+              <p className={`text-sm truncate ${active ? 'text-[#ff4757]' : 'text-[var(--text)]'}`}>
                 {track.name}
               </p>
-              <p className="text-xs text-[#6b7280] truncate">
+              <p className="text-xs text-[var(--text-tertiary)] truncate">
                 {(track.ar || (track as any).artists || [])
                   .map((a: { name: string }) => a.name)
                   .join(' / ')}
@@ -69,12 +69,12 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
               className={`shrink-0 p-1 ${
                 fav
                   ? 'text-[#ff4757]'
-                  : 'text-[#333] hover:text-[#ff4757] opacity-0 group-hover:opacity-100 sm:opacity-0 transition-opacity'
+                  : 'text-[var(--text-tertiary)] hover:text-[#ff4757] opacity-0 group-hover:opacity-100 sm:opacity-0 transition-opacity'
               }`}
             >
               <Heart size={16} fill={fav ? 'currentColor' : 'none'} />
             </button>
-            <span className="text-xs text-[#6b7280] shrink-0 hidden sm:group-hover:block">
+            <span className="text-xs text-[var(--text-tertiary)] shrink-0 hidden sm:group-hover:block">
               {formatTime(track.dt || (track as any).duration || 0)}
             </span>
           </div>

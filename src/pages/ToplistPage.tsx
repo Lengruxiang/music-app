@@ -47,14 +47,14 @@ export default function ToplistPage() {
   if (loading) {
     return (
       <div className="p-6 animate-pulse">
-        <div className="h-6 w-24 bg-[#1e1e1e] rounded mb-6" />
+        <div className="h-6 w-24 bg-[var(--skeleton)] rounded mb-6" />
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="flex gap-3 bg-[#1e1e1e] rounded-xl p-3">
-              <div className="w-24 h-24 bg-[#252525] rounded-lg shrink-0" />
+            <div key={i} className="flex gap-3 bg-[var(--bg-card)] rounded-xl p-3">
+              <div className="w-24 h-24 bg-[var(--skeleton)] rounded-lg shrink-0" />
               <div className="flex-1 space-y-2 pt-4">
-                <div className="h-4 bg-[#252525] rounded" />
-                <div className="h-3 bg-[#252525] rounded w-2/3" />
+                <div className="h-4 bg-[var(--skeleton)] rounded" />
+                <div className="h-3 bg-[var(--skeleton)] rounded w-2/3" />
               </div>
             </div>
           ))}
@@ -65,13 +65,13 @@ export default function ToplistPage() {
 
   return (
     <div className="p-3 sm:p-6">
-      <h2 className="text-lg font-bold mb-4 text-white">排行榜</h2>
+      <h2 className="text-lg font-bold mb-4 text-[var(--text)]">排行榜</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {lists.map((item) => (
           <div
             key={item.id}
             onClick={() => navigate(`/playlist/${item.id}`)}
-            className="flex gap-3 bg-[#1e1e1e] rounded-xl p-3 cursor-pointer hover:bg-[#252525] transition-all duration-200"
+            className="flex gap-3 bg-[var(--bg-card)] rounded-xl p-3 cursor-pointer hover:bg-[var(--bg-card-hover)] transition-all duration-200"
           >
             <img
               src={fixImg(item.coverImgUrl, 300)}
@@ -80,7 +80,7 @@ export default function ToplistPage() {
               className="w-24 h-24 rounded-lg object-cover shrink-0 shadow-md"
             />
             <div className="flex items-center min-w-0 py-0.5">
-              <p className="text-sm font-bold line-clamp-2 leading-5 text-white">{item.name}</p>
+              <p className="text-sm font-bold line-clamp-2 leading-5 text-[var(--text)]">{item.name}</p>
             </div>
           </div>
         ))}

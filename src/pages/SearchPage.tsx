@@ -97,33 +97,33 @@ export default function SearchPage() {
     <div className="p-3 sm:p-6 max-w-4xl mx-auto">
       {/* Search input */}
       <div className="relative mb-6">
-        <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" />
+        <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)]" />
         <input
           type="text"
           value={input}
           onChange={(e) => handleInputChange(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="搜索歌曲、歌手、专辑..."
-          className="w-full pl-10 pr-10 py-3 rounded-full bg-[#1e1e1e] border border-[#2a2a2a] focus:border-[#ff4757]/50 focus:ring-2 focus:ring-[#ff4757]/10 outline-none text-sm text-white placeholder-[#6b7280]"
+          className="w-full pl-10 pr-10 py-3 rounded-full bg-[var(--bg-card)] border border-[var(--border)] focus:border-[#ff4757]/50 focus:ring-2 focus:ring-[#ff4757]/10 outline-none text-sm text-[var(--text)] placeholder-[var(--text-tertiary)]"
         />
         {input && (
           <button
             onClick={() => { setInput(''); setSuggests([]); setSearched(false); setResults(null) }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6b7280] hover:text-white"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-white"
           >
             <X size={18} />
           </button>
         )}
 
         {suggests.length > 0 && (
-          <div className="absolute top-full left-0 right-0 bg-[#1e1e1e] rounded-xl shadow-lg shadow-black/20 border border-[#2a2a2a] mt-1 z-10 py-2">
+          <div className="absolute top-full left-0 right-0 bg-[var(--bg-card)] rounded-xl shadow-lg border border-[var(--border)] mt-1 z-10 py-2">
             {suggests.map((s, i) => (
               <button
                 key={i}
-                className="w-full text-left px-4 py-2 text-sm text-[#9ca3af] hover:text-white hover:bg-white/5 flex items-center gap-2"
+                className="w-full text-left px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-[var(--hover-bg)] flex items-center gap-2"
                 onClick={() => triggerSearch(s)}
               >
-                <Search size={14} className="text-[#6b7280]" />
+                <Search size={14} className="text-[var(--text-tertiary)]" />
                 {s}
               </button>
             ))}
@@ -141,7 +141,7 @@ export default function SearchPage() {
               className={`px-4 py-2 text-sm border-b-2 transition-colors ${
                 activeTab === tab.key
                   ? 'border-[#ff4757] text-[#ff4757] font-medium'
-                  : 'border-transparent text-[#6b7280] hover:text-white'
+                  : 'border-transparent text-[var(--text-tertiary)] hover:text-[var(--text)]'
               }`}
             >
               {tab.label}
@@ -154,7 +154,7 @@ export default function SearchPage() {
       {loading && (
         <div className="space-y-2">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-12 bg-[#1e1e1e] rounded-lg animate-pulse" />
+            <div key={i} className="h-12 bg-[var(--skeleton)] rounded-lg animate-pulse" />
           ))}
         </div>
       )}
@@ -169,7 +169,7 @@ export default function SearchPage() {
               highlightId={currentTrack?.id ?? null}
             />
           ) : (
-            <p className="text-center text-[#6b7280] mt-12">未找到相关歌曲</p>
+            <p className="text-center text-[var(--text-tertiary)] mt-12">未找到相关歌曲</p>
           )}
         </>
       )}
@@ -191,14 +191,14 @@ export default function SearchPage() {
               </Link>
             ))
           ) : (
-            <p className="text-center text-[#6b7280] mt-12">未找到相关歌手</p>
+            <p className="text-center text-[var(--text-tertiary)] mt-12">未找到相关歌手</p>
           )}
         </div>
       )}
 
       {/* Empty state */}
       {!loading && !searched && (
-        <div className="text-center text-[#6b7280] mt-20">
+        <div className="text-center text-[var(--text-tertiary)] mt-20">
           <Search size={48} className="mx-auto mb-4 opacity-20" />
           <p>输入关键词搜索音乐</p>
           <p className="text-xs mt-1">按 Enter 搜索</p>

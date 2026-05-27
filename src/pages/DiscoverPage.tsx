@@ -80,12 +80,12 @@ export default function DiscoverPage() {
       <div className="p-3 sm:p-6 space-y-6 sm:space-y-8">
         {[1, 2].map((section) => (
           <div key={section} className="animate-pulse space-y-4">
-            <div className="h-6 w-24 bg-[#1e1e1e] rounded" />
+            <div className="h-6 w-24 bg-[var(--skeleton)] rounded" />
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {Array.from({ length: 10 }).map((_, i) => (
                 <div key={i}>
-                  <div className="aspect-square bg-[#1e1e1e] rounded-lg mb-2" />
-                  <div className="h-4 bg-[#1e1e1e] rounded w-3/4" />
+                  <div className="aspect-square bg-[var(--skeleton)] rounded-lg mb-2" />
+                  <div className="h-4 bg-[var(--skeleton)] rounded w-3/4" />
                 </div>
               ))}
             </div>
@@ -105,7 +105,7 @@ export default function DiscoverPage() {
         </div>
         <div className="relative">
           <h2 className="text-2xl sm:text-4xl font-bold mb-2 text-white">发现音乐</h2>
-          <p className="text-sm sm:text-base text-[#9ca3af] max-w-md">每次刷新都有新发现，探索无限音乐世界</p>
+          <p className="text-sm sm:text-base text-white/70 max-w-md">每次刷新都有新发现，探索无限音乐世界</p>
         </div>
       </div>
 
@@ -113,10 +113,10 @@ export default function DiscoverPage() {
       {sectionA.list.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg sm:text-xl font-bold text-white">
+            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">
               <span className="text-[#ff4757]">{sectionA.cat}</span> · 精选歌单
             </h3>
-            <span className="text-xs text-[#6b7280]">{sectionA.list.length} 个</span>
+            <span className="text-xs text-[var(--text-tertiary)]">{sectionA.list.length} 个</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
             {sectionA.list.map((pl) => (
@@ -130,10 +130,10 @@ export default function DiscoverPage() {
       {sectionB.list.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg sm:text-xl font-bold text-white">
+            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">
               <span className="text-[#ff4757]">{sectionB.cat}</span> · 精选歌单
             </h3>
-            <span className="text-xs text-[#6b7280]">{sectionB.list.length} 个</span>
+            <span className="text-xs text-[var(--text-tertiary)]">{sectionB.list.length} 个</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
             {sectionB.list.map((pl) => (
@@ -146,8 +146,8 @@ export default function DiscoverPage() {
       {/* 新歌速递 */}
       <section>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg sm:text-xl font-bold text-white">{songTypeLabel}</h3>
-          <span className="text-xs text-[#6b7280]">{newSongs.length} 首</span>
+          <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{songTypeLabel}</h3>
+          <span className="text-xs text-[var(--text-tertiary)]">{newSongs.length} 首</span>
         </div>
         <TrackList
           tracks={newSongs}

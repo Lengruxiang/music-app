@@ -97,7 +97,7 @@ export default function PlaylistPage() {
         />
         <div className="flex flex-col justify-end min-w-0 text-center sm:text-left">
           <p className="text-xs text-[#6b7280] mb-1 sm:mb-2">歌单</p>
-          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-3 truncate text-white">{playlist.name}</h2>
+          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-3 truncate text-[var(--text)]">{playlist.name}</h2>
           <div className="flex items-center gap-2 text-sm text-[#6b7280] mb-2 sm:mb-3 justify-center sm:justify-start">
             <img
               src={fixImg(playlist.creator?.avatarUrl, 120)}
