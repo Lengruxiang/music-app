@@ -22,7 +22,10 @@
   --input-bg: #1e1e1e;
   --hover-bg: rgba(255, 255, 255, 0.05);
   --active-bg: rgba(255, 71, 87, 0.1);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --progress-bg: #333333;
+  --error-bg: #2d1114;
+  --error-text: #ff6b81;
+  --error-border: rgba(255, 71, 87, 0.3);
 }
 
 /* Light theme */
@@ -31,7 +34,7 @@
   --bg-header: #ffffff;
   --bg-surface: #fafafa;
   --bg-card: #ffffff;
-  --bg-card-hover: #f8f9fa;
+  --bg-card-hover: #f3f4f6;
   --bg-sidebar: #ffffff;
   --text: #1a1a1a;
   --text-secondary: #6b7280;
@@ -42,7 +45,10 @@
   --input-bg: #ffffff;
   --hover-bg: rgba(0, 0, 0, 0.03);
   --active-bg: rgba(255, 71, 87, 0.08);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --progress-bg: #e5e7eb;
+  --error-bg: #fef2f2;
+  --error-text: #dc2626;
+  --error-border: #fecaca;
 }
 
 html {

@@ -17,7 +17,7 @@ export default function FavoritesPage() {
     <div className="p-3 sm:p-6">
       <div className="flex items-center gap-2 mb-4">
         <Heart size={20} className="text-[#ff4757]" fill="#ff4757" />
-        <h2 className="text-lg sm:text-xl font-bold text-white">我的收藏</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-[var(--text)]">我的收藏</h2>
         <span className="text-xs text-[#6b7280]">{tracks.length} 首</span>
       </div>
 

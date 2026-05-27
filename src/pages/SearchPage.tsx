@@ -109,7 +109,7 @@ export default function SearchPage() {
         {input && (
           <button
             onClick={() => { setInput(''); setSuggests([]); setSearched(false); setResults(null) }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-white"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-tertiary)] hover:text-[var(--text)]"
           >
             <X size={18} />
           </button>
@@ -133,7 +133,7 @@ export default function SearchPage() {
 
       {/* Tabs */}
       {searched && (
-        <div className="flex gap-1 mb-6 border-b border-[#2a2a2a]">
+        <div className="flex gap-1 mb-6 border-b border-[var(--border)]">
           {TABS.map((tab) => (
             <button
               key={tab.key}
@@ -182,11 +182,11 @@ export default function SearchPage() {
               <Link
                 key={artist.id}
                 to={`/artist/${artist.id}`}
-                className="flex items-center gap-3 p-3 hover:bg-[#1e1e1e] rounded-lg transition-colors"
+                className="flex items-center gap-3 p-3 hover:bg-[var(--hover-bg)] rounded-lg transition-colors"
               >
                 <img src={fixImg(artist.picUrl || artist.img1v1Url, 200)} alt="" loading="lazy" className="w-12 h-12 rounded-full object-cover" />
                 <div>
-                  <p className="text-sm font-medium text-white">{artist.name}</p>
+                  <p className="text-sm font-medium text-[var(--text)]">{artist.name}</p>
                 </div>
               </Link>
             ))

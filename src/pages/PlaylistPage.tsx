@@ -62,16 +62,16 @@ export default function PlaylistPage() {
     return (
       <div className="p-3 sm:p-6 animate-pulse space-y-6">
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-          <div className="w-40 h-40 sm:w-48 sm:h-48 bg-[#1e1e1e] rounded-xl shrink-0 mx-auto sm:mx-0" />
+          <div className="w-40 h-40 sm:w-48 sm:h-48 bg-[var(--skeleton)] rounded-xl shrink-0 mx-auto sm:mx-0" />
           <div className="flex-1 space-y-3">
-            <div className="h-6 bg-[#1e1e1e] rounded w-1/3" />
-            <div className="h-4 bg-[#1e1e1e] rounded w-1/4" />
-            <div className="h-4 bg-[#1e1e1e] rounded w-1/2" />
+            <div className="h-6 bg-[var(--skeleton)] rounded w-1/3" />
+            <div className="h-4 bg-[var(--skeleton)] rounded w-1/4" />
+            <div className="h-4 bg-[var(--skeleton)] rounded w-1/2" />
           </div>
         </div>
         <div className="space-y-2">
           {Array.from({ length: 10 }).map((_, i) => (
-            <div key={i} className="h-12 bg-[#1e1e1e] rounded-lg" />
+            <div key={i} className="h-12 bg-[var(--skeleton)] rounded-lg" />
           ))}
         </div>
       </div>
@@ -80,7 +80,7 @@ export default function PlaylistPage() {
 
   if (!playlist) {
     return (
-      <div className="p-6 text-center text-[#6b7280] mt-20">
+      <div className="p-6 text-center text-[var(--text-tertiary)] mt-20">
         歌单不存在或加载失败
       </div>
     )
@@ -96,9 +96,9 @@ export default function PlaylistPage() {
           className="w-40 h-40 sm:w-48 sm:h-48 rounded-xl object-cover shadow-2xl shadow-black/40 shrink-0 mx-auto sm:mx-0"
         />
         <div className="flex flex-col justify-end min-w-0 text-center sm:text-left">
-          <p className="text-xs text-[#6b7280] mb-1 sm:mb-2">歌单</p>
+          <p className="text-xs text-[var(--text-tertiary)] mb-1 sm:mb-2">歌单</p>
           <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-3 truncate text-[var(--text)]">{playlist.name}</h2>
-          <div className="flex items-center gap-2 text-sm text-[#6b7280] mb-2 sm:mb-3 justify-center sm:justify-start">
+          <div className="flex items-center gap-2 text-sm text-[var(--text-tertiary)] mb-2 sm:mb-3 justify-center sm:justify-start">
             <img
               src={fixImg(playlist.creator?.avatarUrl, 120)}
               alt=""

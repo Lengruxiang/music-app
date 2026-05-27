@@ -98,10 +98,10 @@ export default function BottomPlayer() {
     <div className="h-full flex items-center px-2 sm:px-4 gap-2 sm:gap-4 relative">
       {/* Error toast */}
       {error && (
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-[#2d1114] border border-[#ff4757]/30 text-[#ff6b81] text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 whitespace-nowrap shadow-lg z-10 max-w-[calc(100vw-16px)]">
+        <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-[var(--error-bg)] border border-[var(--error-border)] text-[var(--error-text)] text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 whitespace-nowrap shadow-lg z-10 max-w-[calc(100vw-16px)]">
           <AlertCircle size={14} className="shrink-0" />
           <span className="truncate">{error}</span>
-          <button onClick={clearError} className="hover:text-red-400 shrink-0">
+          <button onClick={clearError} className="hover:text-[var(--primary)] shrink-0">
             <X size={14} />
           </button>
         </div>
@@ -127,7 +127,7 @@ export default function BottomPlayer() {
         </div>
         <button
           onClick={() => toggleFav(currentTrack)}
-          className={`shrink-0 p-1 ${favTracks.some((t: any) => t.id === currentTrack.id) ? 'text-red-500' : 'text-[#9ca3af] hover:text-red-400'}`}
+          className={`shrink-0 p-1 ${favTracks.some((t: any) => t.id === currentTrack.id) ? 'text-[var(--primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--primary)]'}`}
         >
           <Heart size={18} fill={favTracks.some((t: any) => t.id === currentTrack.id) ? 'currentColor' : 'none'} />
         </button>
@@ -140,16 +140,16 @@ export default function BottomPlayer() {
           <span className="w-8 sm:w-10 text-right tabular-nums">{formatTime(progress)}</span>
           <div
             ref={progressRef}
-            className="flex-1 h-2 sm:h-1.5 bg-[#333] rounded-full cursor-pointer group relative"
+            className="flex-1 h-2 sm:h-1.5 bg-[var(--progress-bg)] rounded-full cursor-pointer group relative"
             onClick={handleProgressClick}
           >
             <div
               className={`h-full rounded-full relative transition-all duration-150 ${
-                isLoading ? 'bg-red-300' : 'bg-red-500'
+                isLoading ? 'bg-[var(--primary)]/50' : 'bg-[var(--primary)]'
               }`}
               style={{ width: `${duration > 0 ? (progress / duration) * 100 : 0}%` }}
             >
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-red-500 rounded-full sm:opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-[var(--primary)] rounded-full sm:opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
           <span className="w-8 sm:w-10 tabular-nums">{formatTime(duration)}</span>
@@ -160,10 +160,10 @@ export default function BottomPlayer() {
           <button
             onClick={prev}
             disabled={isLoading}
-            className="text-[#6b7280] hover:text-white transition-colors disabled:opacity-30 p-1"
+            className="text-[var(--text-tertiary)] hover:text-[var(--text)] transition-colors disabled:opacity-30 p-1"
             title="上一首"
           >
-            <SkipBack size={18} className="fill-gray-500" />
+            <SkipBack size={18} className="fill-[var(--text-tertiary)]" />
           </button>
           <button
             onClick={togglePlay}
@@ -182,29 +182,29 @@ export default function BottomPlayer() {
           <button
             onClick={next}
             disabled={isLoading}
-            className="text-[#6b7280] hover:text-white transition-colors disabled:opacity-30 p-1"
+            className="text-[var(--text-tertiary)] hover:text-[var(--text)] transition-colors disabled:opacity-30 p-1"
             title="下一首"
           >
-            <SkipForward size={18} className="fill-gray-500" />
+            <SkipForward size={18} className="fill-[var(--text-tertiary)]" />
           </button>
         </div>
       </div>
 
       {/* Volume + Playlist info - hidden on mobile, compact on desktop */}
       <div className="hidden sm:flex items-center gap-3 w-44 lg:w-56 shrink-0 justify-end">
-        <button onClick={toggleMute} className="text-[#6b7280] hover:text-white">
+        <button onClick={toggleMute} className="text-[var(--text-tertiary)] hover:text-[var(--text)]">
           {volume === 0 ? <VolumeX size={18} /> : <Volume2 size={18} />}
         </button>
         <div
           ref={volumeRef}
-          className="w-16 lg:w-20 h-1.5 bg-[#333] rounded-full cursor-pointer group"
+          className="w-16 lg:w-20 h-1.5 bg-[var(--progress-bg)] rounded-full cursor-pointer group"
           onClick={handleVolumeClick}
         >
           <div
-            className="h-full bg-white rounded-full relative"
+            className="h-full bg-[var(--text)] rounded-full relative"
             style={{ width: `${volume * 100}%` }}
           >
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-gray-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-[var(--text)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
         </div>
         <span className="text-xs text-[#9ca3af]">
