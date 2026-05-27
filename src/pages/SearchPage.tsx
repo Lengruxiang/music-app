@@ -5,6 +5,7 @@ import { search, getSearchSuggest } from '../api/music'
 import { usePlayerStore } from '../stores/player'
 import TrackList from '../components/common/TrackList'
 import type { Track } from '../api/types'
+import { fixImg } from '../utils/img'
 
 const TABS = [
   { key: 1, label: '歌曲' },
@@ -186,7 +187,7 @@ export default function SearchPage() {
                 to={`/artist/${artist.id}`}
                 className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg"
               >
-                <img src={artist.picUrl || artist.img1v1Url} alt="" loading="lazy" className="w-12 h-12 rounded-full object-cover" />
+                <img src={fixImg(artist.picUrl || artist.img1v1Url)} alt="" loading="lazy" className="w-12 h-12 rounded-full object-cover" />
                 <div>
                   <p className="text-sm font-medium">{artist.name}</p>
                 </div>

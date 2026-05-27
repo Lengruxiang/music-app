@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { usePlayerStore } from '../../stores/player'
 import { useFavoritesStore } from '../../stores/favorites'
+import { fixImg } from '../../utils/img'
 
 function formatTime(s: number) {
   if (!isFinite(s) || s < 0) return '0:00'
@@ -91,7 +92,7 @@ export default function BottomPlayer() {
     .map((a: { name: string }) => a.name)
     .join(' / ')
 
-  const coverUrl = currentTrack.al?.picUrl || (currentTrack as any).album?.picUrl
+  const coverUrl = fixImg(currentTrack.al?.picUrl || (currentTrack as any).album?.picUrl)
 
   return (
     <div className="h-full flex items-center px-2 sm:px-4 gap-2 sm:gap-4 relative">

@@ -1,6 +1,7 @@
 import { Heart } from 'lucide-react'
 import type { Track } from '../../api/types'
 import { useFavoritesStore } from '../../stores/favorites'
+import { fixImg } from '../../utils/img'
 
 interface Props {
   tracks: Track[]
@@ -48,7 +49,7 @@ export default function TrackList({ tracks, onPlay, showCover = true, highlightI
             </span>
             {showCover && (
               <img
-                src={track.al?.picUrl || (track as any).album?.picUrl}
+                src={fixImg(track.al?.picUrl || (track as any).album?.picUrl)}
                 alt=""
                 loading="lazy" className="w-9 sm:w-10 h-9 sm:h-10 rounded object-cover shrink-0"
               />

@@ -4,6 +4,7 @@ import { getArtistDetail, getArtistTopSongs } from '../api/music'
 import { usePlayerStore } from '../stores/player'
 import TrackList from '../components/common/TrackList'
 import type { Track } from '../api/types'
+import { fixImg } from '../utils/img'
 
 interface ArtistData {
   id: number
@@ -79,7 +80,7 @@ export default function ArtistPage() {
       {/* Artist header */}
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 mb-6 sm:mb-8">
         <img
-          src={artist.picUrl || artist.cover}
+          src={fixImg(artist.picUrl || artist.cover)}
           alt={artist.name}
           loading="lazy" className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover shadow-lg shrink-0"
         />

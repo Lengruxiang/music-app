@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getToplistDetail } from '../api/music'
 import type { Track } from '../api/types'
+import { fixImg } from '../utils/img'
 
 interface ToplistItem {
   id: number
@@ -61,7 +62,7 @@ export default function ToplistPage() {
             className="flex gap-3 bg-white rounded-lg p-3 cursor-pointer hover:shadow-md transition-shadow"
           >
             <img
-              src={item.coverImgUrl}
+              src={fixImg(item.coverImgUrl)}
               alt={item.name}
               loading="lazy" className="w-24 h-24 rounded-lg object-cover shrink-0"
             />

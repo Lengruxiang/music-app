@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Play } from 'lucide-react'
 import type { Playlist } from '../../api/types'
+import { fixImg } from '../../utils/img'
 
 interface Props {
   playlist: Playlist
@@ -18,7 +19,7 @@ export default function PlaylistCard({ playlist }: Props) {
     >
       <div className="relative aspect-square mb-2 overflow-hidden rounded-md">
         <img
-          src={playlist.coverImgUrl ?? (playlist as any).picUrl}
+          src={fixImg(playlist.coverImgUrl ?? (playlist as any).picUrl)}
           alt={playlist.name}
           loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
