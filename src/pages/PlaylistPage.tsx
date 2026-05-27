@@ -62,16 +62,16 @@ export default function PlaylistPage() {
     return (
       <div className="p-3 sm:p-6 animate-pulse space-y-6">
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-          <div className="w-40 h-40 sm:w-48 sm:h-48 bg-gray-200 rounded-xl shrink-0 mx-auto sm:mx-0" />
+          <div className="w-40 h-40 sm:w-48 sm:h-48 bg-[#1e1e1e] rounded-xl shrink-0 mx-auto sm:mx-0" />
           <div className="flex-1 space-y-3">
-            <div className="h-6 bg-gray-200 rounded w-1/3" />
-            <div className="h-4 bg-gray-200 rounded w-1/4" />
-            <div className="h-4 bg-gray-200 rounded w-1/2" />
+            <div className="h-6 bg-[#1e1e1e] rounded w-1/3" />
+            <div className="h-4 bg-[#1e1e1e] rounded w-1/4" />
+            <div className="h-4 bg-[#1e1e1e] rounded w-1/2" />
           </div>
         </div>
         <div className="space-y-2">
           {Array.from({ length: 10 }).map((_, i) => (
-            <div key={i} className="h-12 bg-gray-200 rounded" />
+            <div key={i} className="h-12 bg-[#1e1e1e] rounded-lg" />
           ))}
         </div>
       </div>
@@ -80,7 +80,7 @@ export default function PlaylistPage() {
 
   if (!playlist) {
     return (
-      <div className="p-6 text-center text-gray-400 mt-20">
+      <div className="p-6 text-center text-[#6b7280] mt-20">
         歌单不存在或加载失败
       </div>
     )
@@ -93,12 +93,12 @@ export default function PlaylistPage() {
         <img
           src={fixImg(playlist.coverImgUrl, 400)}
           alt={playlist.name}
-          className="w-40 h-40 sm:w-48 sm:h-48 rounded-xl object-cover shadow-lg shrink-0 mx-auto sm:mx-0"
+          className="w-40 h-40 sm:w-48 sm:h-48 rounded-xl object-cover shadow-2xl shadow-black/40 shrink-0 mx-auto sm:mx-0"
         />
         <div className="flex flex-col justify-end min-w-0 text-center sm:text-left">
-          <p className="text-xs text-gray-400 mb-1 sm:mb-2">歌单</p>
-          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-3 truncate">{playlist.name}</h2>
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-2 sm:mb-3 justify-center sm:justify-start">
+          <p className="text-xs text-[#6b7280] mb-1 sm:mb-2">歌单</p>
+          <h2 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-3 truncate text-white">{playlist.name}</h2>
+          <div className="flex items-center gap-2 text-sm text-[#6b7280] mb-2 sm:mb-3 justify-center sm:justify-start">
             <img
               src={fixImg(playlist.creator?.avatarUrl, 120)}
               alt=""
@@ -106,12 +106,12 @@ export default function PlaylistPage() {
             />
             <span>{playlist.creator?.nickname}</span>
           </div>
-          <p className="text-xs sm:text-sm text-gray-400">
+          <p className="text-xs sm:text-sm text-[#9ca3af]">
             歌曲数：{allTracks.length} · 播放量：{(playlist.playCount / 10000).toFixed(1)}万
           </p>
           <button
             onClick={playAll}
-            className="mt-3 sm:mt-4 bg-red-500 hover:bg-red-600 text-white px-5 sm:px-6 py-2 rounded-full flex items-center gap-2 text-sm font-medium transition-colors mx-auto sm:mx-0 self-center sm:self-start"
+            className="mt-3 sm:mt-4 bg-[#ff4757] hover:bg-[#ff6b81] text-white px-5 sm:px-6 py-2 rounded-full flex items-center gap-2 text-sm font-medium transition-colors mx-auto sm:mx-0 self-center sm:self-start"
           >
             <Play size={18} fill="white" /> 播放全部
           </button>

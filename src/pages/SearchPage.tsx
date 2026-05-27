@@ -39,15 +39,13 @@ export default function SearchPage() {
     }
   }, [activeTab])
 
-  // Initial load from URL (only on mount)
   useEffect(() => {
     if (urlQuery) {
       setInput(urlQuery)
       doSearch(urlQuery)
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 
-  // Tab switch re-search
   const handleTabChange = (tab: number) => {
     if (tab === activeTab) return
     setActiveTab(tab)
@@ -99,34 +97,33 @@ export default function SearchPage() {
     <div className="p-3 sm:p-6 max-w-4xl mx-auto">
       {/* Search input */}
       <div className="relative mb-6">
-        <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Search size={20} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" />
         <input
           type="text"
           value={input}
           onChange={(e) => handleInputChange(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="搜索歌曲、歌手、专辑..."
-          className="w-full pl-10 pr-10 py-3 rounded-full border border-gray-200 focus:border-red-300 focus:ring-2 focus:ring-red-100 outline-none text-sm"
+          className="w-full pl-10 pr-10 py-3 rounded-full bg-[#1e1e1e] border border-[#2a2a2a] focus:border-[#ff4757]/50 focus:ring-2 focus:ring-[#ff4757]/10 outline-none text-sm text-white placeholder-[#6b7280]"
         />
         {input && (
           <button
             onClick={() => { setInput(''); setSuggests([]); setSearched(false); setResults(null) }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6b7280] hover:text-white"
           >
             <X size={18} />
           </button>
         )}
 
-        {/* Suggestions dropdown */}
         {suggests.length > 0 && (
-          <div className="absolute top-full left-0 right-0 bg-white rounded-lg shadow-lg border border-gray-100 mt-1 z-10 py-2">
+          <div className="absolute top-full left-0 right-0 bg-[#1e1e1e] rounded-xl shadow-lg shadow-black/20 border border-[#2a2a2a] mt-1 z-10 py-2">
             {suggests.map((s, i) => (
               <button
                 key={i}
-                className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 flex items-center gap-2"
+                className="w-full text-left px-4 py-2 text-sm text-[#9ca3af] hover:text-white hover:bg-white/5 flex items-center gap-2"
                 onClick={() => triggerSearch(s)}
               >
-                <Search size={14} className="text-gray-400" />
+                <Search size={14} className="text-[#6b7280]" />
                 {s}
               </button>
             ))}
@@ -136,15 +133,15 @@ export default function SearchPage() {
 
       {/* Tabs */}
       {searched && (
-        <div className="flex gap-1 mb-6 border-b border-gray-200">
+        <div className="flex gap-1 mb-6 border-b border-[#2a2a2a]">
           {TABS.map((tab) => (
             <button
               key={tab.key}
               onClick={() => handleTabChange(tab.key)}
               className={`px-4 py-2 text-sm border-b-2 transition-colors ${
                 activeTab === tab.key
-                  ? 'border-red-500 text-red-500 font-medium'
-                  : 'border-transparent text-gray-500 hover:text-gray-800'
+                  ? 'border-[#ff4757] text-[#ff4757] font-medium'
+                  : 'border-transparent text-[#6b7280] hover:text-white'
               }`}
             >
               {tab.label}
@@ -157,7 +154,7 @@ export default function SearchPage() {
       {loading && (
         <div className="space-y-2">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-12 bg-gray-100 rounded animate-pulse" />
+            <div key={i} className="h-12 bg-[#1e1e1e] rounded-lg animate-pulse" />
           ))}
         </div>
       )}
@@ -172,7 +169,7 @@ export default function SearchPage() {
               highlightId={currentTrack?.id ?? null}
             />
           ) : (
-            <p className="text-center text-gray-400 mt-12">未找到相关歌曲</p>
+            <p className="text-center text-[#6b7280] mt-12">未找到相关歌曲</p>
           )}
         </>
       )}
@@ -185,24 +182,24 @@ export default function SearchPage() {
               <Link
                 key={artist.id}
                 to={`/artist/${artist.id}`}
-                className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg"
+                className="flex items-center gap-3 p-3 hover:bg-[#1e1e1e] rounded-lg transition-colors"
               >
                 <img src={fixImg(artist.picUrl || artist.img1v1Url, 200)} alt="" loading="lazy" className="w-12 h-12 rounded-full object-cover" />
                 <div>
-                  <p className="text-sm font-medium">{artist.name}</p>
+                  <p className="text-sm font-medium text-white">{artist.name}</p>
                 </div>
               </Link>
             ))
           ) : (
-            <p className="text-center text-gray-400 mt-12">未找到相关歌手</p>
+            <p className="text-center text-[#6b7280] mt-12">未找到相关歌手</p>
           )}
         </div>
       )}
 
       {/* Empty state */}
       {!loading && !searched && (
-        <div className="text-center text-gray-400 mt-20">
-          <Search size={48} className="mx-auto mb-4 opacity-30" />
+        <div className="text-center text-[#6b7280] mt-20">
+          <Search size={48} className="mx-auto mb-4 opacity-20" />
           <p>输入关键词搜索音乐</p>
           <p className="text-xs mt-1">按 Enter 搜索</p>
         </div>

@@ -59,12 +59,12 @@ export default function DiscoverPage() {
       <div className="p-3 sm:p-6 space-y-6 sm:space-y-8">
         {[1, 2].map((section) => (
           <div key={section} className="animate-pulse space-y-4">
-            <div className="h-6 w-24 bg-gray-200 rounded" />
+            <div className="h-6 w-24 bg-[#1e1e1e] rounded" />
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {Array.from({ length: 10 }).map((_, i) => (
                 <div key={i}>
-                  <div className="aspect-square bg-gray-200 rounded-lg mb-2" />
-                  <div className="h-4 bg-gray-200 rounded w-3/4" />
+                  <div className="aspect-square bg-[#1e1e1e] rounded-lg mb-2" />
+                  <div className="h-4 bg-[#1e1e1e] rounded w-3/4" />
                 </div>
               ))}
             </div>
@@ -75,31 +75,43 @@ export default function DiscoverPage() {
   }
 
   return (
-    <div className="p-3 sm:p-6 space-y-6 sm:space-y-8">
-      {/* Banner */}
-      <div className="bg-gradient-to-r from-red-500 to-pink-400 rounded-xl p-4 sm:p-8 text-white">
-        <h2 className="text-lg sm:text-2xl font-bold mb-1 sm:mb-2">发现音乐</h2>
-        <p className="text-white/80 text-xs sm:text-sm">探索你喜欢的音乐，发现新的旋律</p>
+    <div className="p-3 sm:p-6 space-y-8 sm:space-y-10">
+      {/* Hero Banner */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#2d1b69] via-[#1a1a3e] to-[#0d1117] p-6 sm:p-10">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute -top-20 -right-20 w-80 h-80 bg-gradient-to-br from-[#ff4757] to-[#ff6b81] rounded-full blur-3xl" />
+          <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-gradient-to-tr from-[#7c3aed] to-[#a78bfa] rounded-full blur-3xl" />
+        </div>
+        <div className="relative">
+          <h2 className="text-2xl sm:text-4xl font-bold mb-2 text-white">发现音乐</h2>
+          <p className="text-sm sm:text-base text-[#9ca3af] max-w-md">探索你喜欢的音乐，发现无限可能</p>
+        </div>
       </div>
 
       {/* 粤语歌单 */}
       {cantoneseList.length > 0 && (
         <section>
-          <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">粤语歌单</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-            {cantoneseList.slice(0, 10).map((pl) => (
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg sm:text-xl font-bold text-white">粤语歌单</h3>
+            <span className="text-xs text-[#6b7280]">{cantoneseList.length} 个歌单</span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
+            {cantoneseList.slice(0, 12).map((pl) => (
               <PlaylistCard key={pl.id} playlist={pl as any} />
             ))}
           </div>
         </section>
       )}
 
-      {/* 华语热门歌单 */}
+      {/* 华语精选 */}
       {hotPlaylists.length > 0 && (
         <section>
-          <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">华语精选</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-            {hotPlaylists.slice(0, 10).map((pl) => (
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg sm:text-xl font-bold text-white">华语精选</h3>
+            <span className="text-xs text-[#6b7280]">{hotPlaylists.length} 个歌单</span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
+            {hotPlaylists.slice(0, 12).map((pl) => (
               <PlaylistCard key={pl.id} playlist={pl as any} />
             ))}
           </div>
@@ -108,7 +120,9 @@ export default function DiscoverPage() {
 
       {/* 新歌速递 */}
       <section>
-        <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4">新歌速递</h3>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg sm:text-xl font-bold text-white">新歌速递</h3>
+        </div>
         <TrackList
           tracks={newSongs}
           onPlay={handlePlay}
