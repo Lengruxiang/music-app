@@ -3,16 +3,16 @@ import { Play, Music } from 'lucide-react'
 import type { Playlist } from '../../api/types'
 
 const GRADIENTS = [
-  'from-indigo-500 to-purple-600',
-  'from-pink-500 to-rose-600',
-  'from-sky-400 to-blue-600',
-  'from-emerald-400 to-teal-600',
-  'from-amber-400 to-orange-600',
-  'from-violet-500 to-fuchsia-600',
-  'from-cyan-400 to-sky-600',
-  'from-rose-400 to-pink-600',
-  'from-lime-400 to-green-600',
-  'from-fuchsia-500 to-purple-700',
+  'from-slate-400 to-slate-500',
+  'from-stone-400 to-stone-500',
+  'from-zinc-400 to-zinc-500',
+  'from-neutral-400 to-neutral-500',
+  'from-slate-300 to-zinc-400',
+  'from-stone-300 to-neutral-400',
+  'from-zinc-300 to-slate-400',
+  'from-neutral-300 to-stone-400',
+  'from-gray-400 to-gray-500',
+  'from-gray-300 to-slate-400',
 ]
 
 function gradientClass(name: string): string {

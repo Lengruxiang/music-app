@@ -41,7 +41,7 @@ export default function DiscoverPage() {
   useEffect(() => {
     const cats = pick(CATEGORY_POOL, 2)
     const songType = NEW_SONG_TYPES[Math.floor(Math.random() * NEW_SONG_TYPES.length)]
-    const songLabels: Record<number, string> = { 0: '新歌速递', 7: '华语新歌', 96: '欧美新歌', 8: '日语新歌', 16: '韩语新歌' }
+    const songLabels: Record<number, string> = { 0: '新歌', 7: '华语新歌', 96: '欧美新歌', 8: '日语新歌', 16: '韩语新歌' }
     setSongTypeLabel(songLabels[songType] || '新歌速递')
 
     async function load() {
@@ -113,9 +113,7 @@ export default function DiscoverPage() {
       {sectionA.list.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">
-              <span className="text-[#ff4757]">{sectionA.cat}</span> · 精选歌单
-            </h3>
+            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{sectionA.cat} 歌单</h3>
             <span className="text-xs text-[var(--text-tertiary)]">{sectionA.list.length} 个</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
@@ -130,9 +128,7 @@ export default function DiscoverPage() {
       {sectionB.list.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">
-              <span className="text-[#ff4757]">{sectionB.cat}</span> · 精选歌单
-            </h3>
+            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{sectionB.cat} 歌单</h3>
             <span className="text-xs text-[var(--text-tertiary)]">{sectionB.list.length} 个</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
