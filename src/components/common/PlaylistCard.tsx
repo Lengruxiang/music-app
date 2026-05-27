@@ -8,10 +8,6 @@ interface Props {
 }
 
 export default function PlaylistCard({ playlist }: Props) {
-  const countText = playlist.playCount > 10000
-    ? `${(playlist.playCount / 10000).toFixed(1)}万`
-    : `${playlist.playCount}`
-
   return (
     <Link
       to={`/playlist/${playlist.id}`}
@@ -29,9 +25,6 @@ export default function PlaylistCard({ playlist }: Props) {
             <Play size={20} className="text-white fill-white ml-0.5" />
           </div>
         </div>
-        <span className="absolute top-2 right-2 text-[11px] text-white bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded-full font-medium">
-          {countText}
-        </span>
       </div>
       <p className="text-sm font-medium text-white line-clamp-2 leading-5">{playlist.name}</p>
     </Link>

@@ -107,7 +107,7 @@ export default function PlaylistPage() {
             <span>{playlist.creator?.nickname}</span>
           </div>
           <p className="text-xs sm:text-sm text-[#9ca3af]">
-            歌曲数：{allTracks.length} · 播放量：{(playlist.playCount / 10000).toFixed(1)}万
+            共 {allTracks.length} 首歌曲
           </p>
           <button
             onClick={playAll}
