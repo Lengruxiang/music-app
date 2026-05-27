@@ -4,6 +4,15 @@ import { getToplistDetail } from '../api/music'
 import type { Track } from '../api/types'
 import { fixImg } from '../utils/img'
 
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
 interface ToplistItem {
   id: number
   name: string
@@ -21,7 +30,7 @@ export default function ToplistPage() {
     async function load() {
       try {
         const res = await getToplistDetail()
-        setLists(res.list || [])
+        setLists(shuffle(res.list || []))
       } catch (e) {
         console.error('Failed to load toplists:', e)
       } finally {

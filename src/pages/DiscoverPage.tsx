@@ -5,6 +5,15 @@ import { getTopPlaylists, getNewSongs } from '../api/music'
 import { usePlayerStore } from '../stores/player'
 import type { Track } from '../api/types'
 
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
 interface SimplePlaylist {
   id: number
   name: string
@@ -31,16 +40,20 @@ export default function DiscoverPage() {
         ])
 
         setCantoneseList(
-          (cantoneseRes.playlists || [])
-            .filter((p: any) => p.trackCount >= 80)
-            .sort((a: any, b: any) => b.playCount - a.playCount)
+          shuffle(
+            (cantoneseRes.playlists || [])
+              .filter((p: any) => p.trackCount >= 80)
+              .sort((a: any, b: any) => b.playCount - a.playCount)
+          )
         )
         setHotPlaylists(
-          (hotRes.playlists || [])
-            .filter((p: any) => p.trackCount >= 80)
-            .sort((a: any, b: any) => b.playCount - a.playCount)
+          shuffle(
+            (hotRes.playlists || [])
+              .filter((p: any) => p.trackCount >= 80)
+              .sort((a: any, b: any) => b.playCount - a.playCount)
+          )
         )
-        setNewSongs(songRes.data || [])
+        setNewSongs(shuffle(songRes.data || []))
       } catch (e) {
         console.error('Failed to load discover page:', e)
       } finally {
