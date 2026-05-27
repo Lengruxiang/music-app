@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import PlaylistCard from '../components/common/PlaylistCard'
 import TrackList from '../components/common/TrackList'
 import { getTopPlaylists, getNewSongs } from '../api/music'
 import { usePlayerStore } from '../stores/player'
+import { useDiscoverStore } from '../stores/discover'
 import type { Track } from '../api/types'
 
 const CATEGORY_POOL = ['粤语', '华语', '欧美', '日语', '韩语', '电子', '摇滚', '民谣', '说唱', '古风', '轻音乐', 'R&B']
-const NEW_SONG_TYPES = [0, 7, 96, 8, 16] // 全部, 华语, 欧美, 日本, 韩国
+const NEW_SONG_TYPES = [0, 7, 96, 8, 16]
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr]
@@ -21,28 +22,21 @@ function pick<T>(arr: T[], n: number): T[] {
   return shuffle([...arr]).slice(0, n)
 }
 
-interface SimplePlaylist {
-  id: number
-  name: string
-  coverImgUrl: string
-  playCount: number
-  trackCount: number
-}
-
 export default function DiscoverPage() {
-  const [sectionA, setSectionA] = useState<{ cat: string; list: SimplePlaylist[] }>({ cat: '', list: [] })
-  const [sectionB, setSectionB] = useState<{ cat: string; list: SimplePlaylist[] }>({ cat: '', list: [] })
-  const [newSongs, setNewSongs] = useState<Track[]>([])
-  const [songTypeLabel, setSongTypeLabel] = useState('')
-  const [loading, setLoading] = useState(true)
+  const store = useDiscoverStore()
   const play = usePlayerStore((s) => s.play)
   const currentTrack = usePlayerStore((s) => s.currentTrack)
+  const fetching = useRef(false)
 
   useEffect(() => {
+    if (fetching.current) return
+    fetching.current = true
+
     const cats = pick(CATEGORY_POOL, 2)
     const songType = NEW_SONG_TYPES[Math.floor(Math.random() * NEW_SONG_TYPES.length)]
     const songLabels: Record<number, string> = { 0: '新歌', 7: '华语新歌', 96: '欧美新歌', 8: '日语新歌', 16: '韩语新歌' }
-    setSongTypeLabel(songLabels[songType] || '新歌速递')
+
+    if (!store.loaded) store.setLoading(true)
 
     async function load() {
       try {
@@ -59,23 +53,26 @@ export default function DiscoverPage() {
               .sort((a: any, b: any) => b.playCount - a.playCount)
           ).slice(0, 12)
 
-        setSectionA({ cat: cats[0], list: processPlaylists(resA.playlists || []) })
-        setSectionB({ cat: cats[1], list: processPlaylists(resB.playlists || []) })
-        setNewSongs(shuffle((songRes.data || []) as Track[]).slice(0, 20))
+        store.setData({
+          sectionA: { cat: cats[0], list: processPlaylists(resA.playlists || []) },
+          sectionB: { cat: cats[1], list: processPlaylists(resB.playlists || []) },
+          newSongs: shuffle((songRes.data || []) as Track[]).slice(0, 20),
+          songTypeLabel: songLabels[songType] || '新歌',
+        })
       } catch (e) {
         console.error('Failed to load discover page:', e)
-      } finally {
-        setLoading(false)
+        store.setLoading(false)
       }
+      fetching.current = false
     }
     load()
   }, [])
 
   const handlePlay = (track: Track) => {
-    play(track, newSongs)
+    play(track, store.newSongs)
   }
 
-  if (loading) {
+  if (!store.loaded) {
     return (
       <div className="p-3 sm:p-6 space-y-6 sm:space-y-8">
         {[1, 2].map((section) => (
@@ -110,43 +107,41 @@ export default function DiscoverPage() {
       </div>
 
       {/* Section A */}
-      {sectionA.list.length > 0 && (
+      {store.sectionA.list.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{sectionA.cat} 歌单</h3>
-            <span className="text-xs text-[var(--text-tertiary)]">{sectionA.list.length} 个</span>
+            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{store.sectionA.cat} 歌单</h3>
+            <span className="text-xs text-[var(--text-tertiary)]">{store.sectionA.list.length} 个</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
-            {sectionA.list.map((pl) => (
+            {store.sectionA.list.map((pl) => (
               <PlaylistCard key={pl.id} playlist={pl as any} />
             ))}
           </div>
         </section>
       )}
 
-      {/* Section B */}
-      {sectionB.list.length > 0 && (
+      {store.sectionB.list.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{sectionB.cat} 歌单</h3>
-            <span className="text-xs text-[var(--text-tertiary)]">{sectionB.list.length} 个</span>
+            <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{store.sectionB.cat} 歌单</h3>
+            <span className="text-xs text-[var(--text-tertiary)]">{store.sectionB.list.length} 个</span>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
-            {sectionB.list.map((pl) => (
+            {store.sectionB.list.map((pl) => (
               <PlaylistCard key={pl.id} playlist={pl as any} />
             ))}
           </div>
         </section>
       )}
 
-      {/* 新歌速递 */}
       <section>
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{songTypeLabel}</h3>
-          <span className="text-xs text-[var(--text-tertiary)]">{newSongs.length} 首</span>
+          <h3 className="text-lg sm:text-xl font-bold text-[var(--text)]">{store.songTypeLabel}</h3>
+          <span className="text-xs text-[var(--text-tertiary)]">{store.newSongs.length} 首</span>
         </div>
         <TrackList
-          tracks={newSongs}
+          tracks={store.newSongs}
           onPlay={handlePlay}
           highlightId={currentTrack?.id ?? null}
         />
