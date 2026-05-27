@@ -1,9 +1,11 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import MobileNav from './MobileNav'
 import BottomPlayer from '../player/BottomPlayer'
 
 export default function Layout() {
+  const location = useLocation()
+
   return (
     <div className="h-screen flex flex-col bg-[var(--bg)]">
       <header className="lg:hidden bg-[var(--bg-header)] border-b border-[var(--border)] px-4 py-2.5 flex items-center justify-between shrink-0">
@@ -15,7 +17,7 @@ export default function Layout() {
           <Sidebar />
         </div>
         <main className="flex-1 overflow-y-auto">
-          <Outlet />
+          <Outlet key={location.pathname} />
         </main>
       </div>
 
