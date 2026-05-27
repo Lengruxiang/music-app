@@ -35,8 +35,7 @@ function getAudio() {
 }
 
 function proxyUrl(url: string) {
-  const base = import.meta.env.DEV ? '' : '/api'
-  return `${base}/audio-proxy?url=${encodeURIComponent(url)}`
+  return `/audio-proxy?url=${encodeURIComponent(url)}`
 }
 
 export const usePlayerStore = create<PlayerState>((set, get) => ({
